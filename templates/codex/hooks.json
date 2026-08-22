@@ -1,0 +1,42 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dir=\"$PWD\"; while [ \"$dir\" != / ] && [ ! -f \"$dir/.codex/hooks/session-start.sh\" ]; do dir=${dir%/*}; [ -n \"$dir\" ] || dir=/; done; bash \"$dir/.codex/hooks/session-start.sh\"",
+            "timeout": 30,
+            "statusMessage": "Codex session logを初期化中"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dir=\"$PWD\"; while [ \"$dir\" != / ] && [ ! -f \"$dir/.codex/hooks/post-tool-use.sh\" ]; do dir=${dir%/*}; [ -n \"$dir\" ] || dir=/; done; bash \"$dir/.codex/hooks/post-tool-use.sh\"",
+            "timeout": 30,
+            "statusMessage": "Bashの終了状態を確認中"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dir=\"$PWD\"; while [ \"$dir\" != / ] && [ ! -f \"$dir/.codex/hooks/stop.sh\" ]; do dir=${dir%/*}; [ -n \"$dir\" ] || dir=/; done; bash \"$dir/.codex/hooks/stop.sh\"",
+            "timeout": 30,
+            "statusMessage": "未解決エラーを確認中"
+          }
+        ]
+      }
+    ]
+  }
+}

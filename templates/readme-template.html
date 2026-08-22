@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{project-name} — README</title>
+<style>
+  /* kote2 Builder 標準テーマ(正本: templates/design-theme.md)。緑枠 + クリーム地。 */
+  :root {
+    --bg: #f0efe2;          /* クリーム地 */
+    --frame: #71804b;       /* 外枠のオリーブグリーン */
+    --ink: #2f3a1c;         /* 見出し・本文の濃緑 */
+    --ink-soft: #5a6242;    /* 補足テキスト */
+    --accent: #b05c2e;      /* ラストオレンジ(強調) */
+    --card: #ffffff;        /* カード背景 */
+    --card-line: #d9dcc3;   /* カード枠線 */
+    --badge-bg: #dde0c8;    /* 淡緑バッジ */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--frame);
+    color: var(--ink);
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  .page {
+    background: var(--bg);
+    margin: 18px;
+    padding: 48px 56px 40px;
+    min-height: calc(100vh - 36px);
+    max-width: 860px;
+  }
+  @media (min-width: 940px) { .page { margin: 18px auto; } }
+  @media (max-width: 640px) { .page { margin: 10px; padding: 24px 20px 28px; } }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.25em; color: var(--frame); text-transform: uppercase; margin-bottom: 6px; }
+  h1 { font-size: 30px; font-weight: 800; margin-bottom: 4px; }
+  .sub { color: var(--ink-soft); font-size: 13px; margin-bottom: 8px; }
+  h2 { font-size: 17px; font-weight: 800; margin: 36px 0 12px; padding-left: 10px; border-left: 5px solid var(--frame); }
+  h3 { font-size: 15px; font-weight: 800; margin: 24px 0 8px; }
+  p, li { font-size: 15px; }
+  ul, ol { margin: 8px 0 8px 22px; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+  }
+  pre {
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    border-radius: 10px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+  pre code { background: transparent; border: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--card-line); border-radius: 10px; overflow: hidden; font-size: 13px; margin: 12px 0; }
+  th { background: var(--badge-bg); text-align: left; padding: 8px 12px; font-size: 11px; letter-spacing: 0.08em; }
+  td { padding: 8px 12px; border-top: 1px solid var(--card-line); }
+  .callout {
+    background: #fbf9ee;
+    border: 1px solid var(--accent);
+    border-left: 6px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 13.5px;
+  }
+  .callout strong { color: var(--accent); }
+  .muted { color: var(--ink-soft); font-size: 13px; }
+  footer.meta { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--card-line); font-size: 11px; color: var(--ink-soft); }
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; padding: 24px 28px; }
+    h2 { break-after: avoid; }
+    table, .callout, pre { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="eyebrow">PROJECT README</div>
+<h1>{project-name}</h1>
+<p class="sub">{プロジェクト概要を 1〜2 行}</p>
+
+<h2>最初の一歩</h2>
+
+<ol>
+  <li><strong>まずこの README を読む</strong>(必要なツールとセットアップ手順が下に書いてあります)</li>
+  <li>このフォルダを対応する AI で開く(Claude Code。Codex両対応を選んだ場合はCodexも可。必要ならClaude.ai Projectへアップロード)</li>
+  <li>最初の会話で「<strong>開始して</strong>」と話しかける(できること・次の一歩を AI が案内します)</li>
+  <li><strong><code>dashboard.html</code> をダブルクリックで開く</strong>(できること・使い方・提案が見られる情報ページ。使うほど内容が溜まっていきます)</li>
+</ol>
+
+<!-- ビルダー生成時: 対応AIが「Claude Code + Codex」の場合だけ、ここから次の区切りコメントまでを残す。Claude Codeのみの場合はセクションごと削除する -->
+<h2>Codexでプロジェクトの仕組みを図解</h2>
+<div class="callout">
+  Codexに「<strong>このプロジェクトの仕組みを画像化して</strong>」と話しかけると、実装や要件を確認し、内容に合う図法を選び、1080pでも読める非エンジニア向けの図解を<code>visuals/project-overview.png</code>へ作ります。
+</div>
+<!-- ビルダー生成時: Codex両対応案内ここまで -->
+
+<h2>セットアップ</h2>
+
+<div class="callout">
+  <strong>困った時は、このプロジェクトに対応している AI に聞いてください</strong><br>
+  このフォルダを対応する AI で開いた状態で「セットアップを一緒にやって」と話しかけると、
+  あなたの環境を確認しながら手順を進めてくれます。
+  「<code>node -v</code> って何?」のような素朴な疑問にも答えてくれます。
+</div>
+
+<h3>1. このフォルダを開く</h3>
+<p>対応する AI(Claude Code。Codex両対応を選んだ場合はCodexも可)またはお好みのエディタで、このフォルダを開きます。</p>
+
+<h3>2. 必要なものをインストール</h3>
+
+<p>{用途別の依存関係インストール案内をここに}</p>
+
+<!--
+TypeScript プロジェクトの場合:
+
+pnpm(最新版)をインストール:
+<pre><code>curl -fsSL https://get.pnpm.io/install.sh | sh -</code></pre>
+<p>すでに入っている場合は <code>pnpm self-update</code> で最新化できます。</p>
+
+依存をインストール:
+<pre><code>pnpm install</code></pre>
+
+Python プロジェクトの場合:
+<pre><code>python3 -m venv .venv
+source .venv/bin/activate  # Windows は .venv\Scripts\activate
+python3 -m pip install --upgrade pip
+pip install -r requirements.txt</code></pre>
+-->
+
+<h3>3. <code>.env</code> ファイルを作る</h3>
+
+<p><code>.env.example</code> をコピーして <code>.env</code> を作り、必要な値を入れます:</p>
+
+<pre><code>cp .env.example .env</code></pre>
+
+<p>その後、エディタで <code>.env</code> を開いて、コメントの説明に従って値を埋めてください。</p>
+
+<h2><code>.env</code> について(はじめての方へ)</h2>
+
+<div class="callout">
+  <code>.env</code> は「危険なファイル」ではなく「秘密情報を置くファイル」です。<br><br>
+  危険なのは、秘密情報を GitHub、チャット、ブラウザ、AI エージェントの前に
+  不用意に出してしまうことです。<br>
+  まずは <code>.env.local</code> を使い、<code>.gitignore</code> に入れ、共有用には <code>.env.example</code> を作る。
+  これが最初の安全ラインです。
+</div>
+
+<h3>このプロジェクトでは</h3>
+<ul>
+  <li><code>.env</code> と <code>.env.local</code> は <code>.gitignore</code> に入っています(GitHub に上がらない設定)</li>
+  <li><code>.env.example</code> は値が空のテンプレ(これは共有 OK)</li>
+  <li>値を埋めた <code>.env</code> は自分の PC だけに置いてください</li>
+</ul>
+
+<h2>ファイルの意味</h2>
+
+<table>
+  <thead>
+    <tr><th>ファイル / フォルダ</th><th>役割</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>CLAUDE.md</code></td><td>AI の指示書(これを見て AI が動きます)</td></tr>
+    <tr><td><code>README.md</code></td><td>この README の Markdown 版(内容は同じ。AI・Git 用の正本)</td></tr>
+    <tr><td><code>aboutme.md</code></td><td>あなたの情報(AI に「あなたが誰か」を伝える)</td></tr>
+    <tr><td><code>ai-behavior.md</code></td><td>AI への要望(「こう振る舞ってほしい」を伝える)</td></tr>
+    <tr><td><code>.claude/</code></td><td>Claude Code の設定・スキル・コマンド</td></tr>
+    <tr><td><code>.claude/output-styles/default.md</code></td><td>AI の口調設定</td></tr>
+    <tr><td><code>.claude/skills/</code></td><td>再利用できるスキル(自動化処理など)</td></tr>
+    <tr><td><code>.claude/commands/</code></td><td>スラッシュコマンド(<code>/self-heal</code> など)</td></tr>
+  </tbody>
+</table>
+
+<h2>カスタマイズ</h2>
+
+<ul>
+  <li><strong>AI の振る舞いを変えたい</strong>: <code>ai-behavior.md</code> を編集</li>
+  <li><strong>自分の情報を更新したい</strong>: <code>aboutme.md</code> を編集</li>
+  <li><strong>口調を変えたい</strong>: <code>.claude/output-styles/default.md</code> を編集</li>
+</ul>
+
+<h2>わからないことがあれば</h2>
+
+<p>このフォルダを開いた状態で Claude に「このファイル何?」「どう使うの?」と聞いてください。
+<strong>非エンジニア視点で答えてくれます</strong>。</p>
+
+<footer class="meta">— kote2 Builder v{version} / {date} 生成</footer>
+<!-- ↑ ビルダー生成時に必ず実値へ置換する(validate-output の刻印チェック・アップデート判定に使う) -->
+<!-- フッターのブランド帯はデフォルト無し(緑枠のみ)。プロジェクトで文言指定があった時だけ </div> の直後に <div class="brand-band">…</div> を足す -->
+
+</div>
+</body>
+</html>

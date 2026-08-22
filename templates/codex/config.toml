@@ -1,0 +1,12 @@
+# Project-scoped Codex defaults. Loaded only after this repository is trusted.
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+allow_login_shell = false
+web_search = "cached"
+
+[sandbox_workspace_write]
+network_access = false
+
+[features]
+hooks = true

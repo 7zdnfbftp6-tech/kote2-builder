@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dir=\"$PWD\"; while [ \"$dir\" != / ] && [ ! -f \"$dir/.codex/hooks/session-start.sh\" ]; do dir=${dir%/*}; [ -n \"$dir\" ] || dir=/; done; bash \"$dir/.codex/hooks/session-start.sh\"",
+            "timeout": 30,
+            "statusMessage": "知識の棚卸し時期を確認中"
+          }
+        ]
+      }
+    ]
+  }
+}

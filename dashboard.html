@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kote2 Builder — ダッシュボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --text: #1f2328;
+    --sub: #59636e;
+    --accent: #0f4c5c;
+    --accent-soft: #e7f0f2;
+    --line: #e4e7eb;
+    --ok: #0f7b5f;   --ok-bg: #e6f4ee;
+    --warn: #9a6700; --warn-bg: #fff3d6;
+    --info: #35618f; --info-bg: #e9f0f7;
+    --code-bg: #f1f3f5;
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg); color: var(--text);
+    font-size: 15px; line-height: 1.8;
+  }
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ===== サイドバー ===== */
+  aside {
+    width: 300px; flex: none;
+    background: var(--surface); border-right: 1px solid var(--line);
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    padding: 28px 22px; display: flex; flex-direction: column; gap: 22px;
+  }
+  .brand h1 { font-size: 20px; font-weight: 900; line-height: 1.35; letter-spacing: .01em; }
+  .brand h1 span { display: block; font-size: 12px; color: var(--sub); font-weight: 500; letter-spacing: .1em; margin-top: 2px; }
+  .brand .tagline { font-size: 13px; color: var(--sub); margin-top: 10px; }
+  .brand .ver { font-size: 12px; color: var(--sub); margin-top: 8px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile { border: 1px solid var(--line); border-radius: var(--radius); padding: 13px 12px 10px; }
+  .tile b { display: block; font-size: 27px; font-weight: 900; color: var(--accent); line-height: 1.25; font-feature-settings: "tnum"; }
+  .tile span { font-size: 11.5px; color: var(--sub); }
+  .search input {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid var(--line); border-radius: 8px;
+    font: inherit; font-size: 13px; background: var(--bg); color: var(--text);
+  }
+  .search input:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  nav { display: flex; flex-direction: column; }
+  nav a {
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: 8px;
+    color: var(--text); text-decoration: none; font-size: 13.5px; font-weight: 500;
+  }
+  nav a:hover { background: var(--accent-soft); }
+  nav a .n { font-size: 11px; color: var(--sub); background: var(--bg); border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; font-feature-settings: "tnum"; }
+  .side-foot { margin-top: auto; font-size: 11.5px; color: var(--sub); line-height: 1.9; border-top: 1px solid var(--line); padding-top: 14px; }
+
+  /* ===== メイン ===== */
+  main { flex: 1; min-width: 0; padding: 36px 40px 72px; max-width: 1180px; }
+  section { margin-bottom: 52px; }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  .sec-head .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); flex: none; align-self: center; }
+  .sec-head.c-recipe .dot { background: var(--ok); }
+  .sec-head.c-project .dot { background: var(--info); }
+  h2 { font-size: 16px; font-weight: 700; letter-spacing: .04em; }
+  .sec-head .count { font-size: 12px; font-weight: 700; color: var(--sub); background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 0 9px; }
+  .sec-head .hint { margin-left: auto; font-size: 12.5px; color: var(--sub); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); border-top: 3px solid var(--accent);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .card.recipe { border-top-color: var(--ok); }
+  .card.project { border-top-color: var(--info); }
+  .card .name { font-weight: 700; font-size: 15px; line-height: 1.5; }
+  .card .meta { font-size: 12px; color: var(--sub); font-feature-settings: "tnum"; }
+  .card .desc { font-size: 13px; color: var(--sub); flex: 1; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 9px; }
+  .badge.ok { color: var(--ok); background: var(--ok-bg); }
+  .badge.warn { color: var(--warn); background: var(--warn-bg); }
+  .badge.gray { color: var(--sub); background: var(--code-bg); }
+  .badge.info { color: var(--info); background: var(--info-bg); }
+  .say { color: var(--accent); font-weight: 700; }
+  .saychip { display: inline-block; align-self: flex-start; font-size: 12.5px; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 2px 10px; font-weight: 700; }
+  .empty {
+    grid-column: 1 / -1; border: 1px dashed var(--line); border-radius: var(--radius);
+    padding: 22px; text-align: center; color: var(--sub); font-size: 13.5px;
+  }
+
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; vertical-align: top; }
+  th { font-weight: 700; color: var(--sub); font-size: 12.5px; letter-spacing: .04em; background: var(--surface); }
+  tr:last-child td { border-bottom: none; }
+
+  .promise { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 14px 0 6px; }
+  .promise .p { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; font-size: 12.5px; color: var(--sub); }
+  .promise .p b { display: block; font-size: 13.5px; color: var(--text); margin-bottom: 2px; }
+
+  .step {
+    display: flex; gap: 14px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px;
+  }
+  .step .num {
+    flex: none; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 4px;
+  }
+  .step .body { min-width: 0; }
+  .step .title { font-weight: 700; font-size: 14.5px; }
+  .step .desc { color: var(--sub); font-size: 13px; margin-top: 4px; }
+  .step .desc + .desc { margin-top: 6px; }
+  kbd {
+    display: inline-block; padding: 0 6px;
+    background: var(--code-bg); border: 1px solid var(--line); border-bottom-width: 2px;
+    border-radius: 5px; font-family: inherit; font-size: 12px; font-weight: 500;
+  }
+  code {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 4px;
+    padding: 0 6px; font-size: 12.5px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  .chat {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 12px 16px; margin-top: 8px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.9;
+    overflow-x: auto; white-space: pre;
+  }
+  .chat .label { font-family: "Noto Sans JP", sans-serif; font-size: 11.5px; color: var(--sub); display: block; margin-bottom: 2px; white-space: normal; }
+  .chat .muted { color: var(--sub); }
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--surface); border-radius: 0 8px 8px 0;
+    padding: 10px 16px; margin-top: 10px;
+    font-size: 13px; color: var(--sub);
+  }
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0 18px; margin-top: 12px; }
+  details summary { cursor: pointer; padding: 13px 0; font-weight: 700; font-size: 14px; color: var(--text); }
+  details[open] summary { border-bottom: 1px solid var(--line); }
+  details .inner { padding: 14px 0 18px; }
+  details .inner .card { margin-bottom: 10px; border-top-width: 1px; border-top-color: var(--line); }
+
+  ul.news { list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 18px; }
+  ul.news li { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  ul.news li:last-child { border-bottom: none; }
+  ul.news .d { flex: none; width: 92px; color: var(--sub); font-weight: 700; font-size: 12.5px; font-feature-settings: "tnum"; }
+  ul.news .t { color: var(--text); min-width: 0; }
+
+  ul.plain { list-style: none; }
+  ul.plain li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  ul.plain li:last-child { border-bottom: none; }
+  .sub { color: var(--sub); font-size: 13px; }
+
+  #data-error {
+    background: var(--warn-bg); color: var(--warn);
+    border: 1px solid #e8d8a8; border-radius: var(--radius);
+    padding: 14px 18px; margin-bottom: 28px; font-size: 13.5px; font-weight: 500;
+  }
+  main > footer { color: var(--sub); font-size: 12.5px; border-top: 1px solid var(--line); padding-top: 20px; line-height: 2; }
+  main > footer a { color: var(--accent); }
+
+  @media (max-width: 960px) {
+    .layout { display: block; }
+    aside { position: static; width: auto; height: auto; border-right: none; border-bottom: 1px solid var(--line); }
+    .side-foot { margin-top: 0; }
+    main { padding: 24px 16px 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside>
+    <div class="brand">
+      <h1>kote2 Builder<span>Claude Code / Codex 対応</span></h1>
+      <p class="tagline">「作りたいものに集中できる」Claude Code / Codex プロジェクト自動構築ツール</p>
+      <p class="ver">v<span data-bind="version">—</span> ・ 最終更新 <span data-bind="updated">—</span></p>
+    </div>
+    <div class="tiles">
+      <div class="tile"><b data-stat="recipes">0</b><span>在庫レシピ</span></div>
+      <div class="tile"><b data-stat="projects">0</b><span>作ったもの</span></div>
+      <div class="tile"><b data-stat="catalog">0</b><span>できること</span></div>
+      <div class="tile"><b data-stat="proposals">0</b><span>今の提案</span></div>
+    </div>
+    <div class="search">
+      <input id="search" type="search" placeholder="レシピ・プロジェクト・やりたいことを検索">
+    </div>
+    <nav>
+      <a href="#proposals">今のあなたへの提案 <span class="n" data-stat="proposals">0</span></a>
+      <a href="#recipes">レシピ在庫 <span class="n" data-stat="recipes">0</span></a>
+      <a href="#projects">生成したプロジェクト <span class="n" data-stat="projects">0</span></a>
+      <a href="#catalog">できること(言い方一覧)</a>
+      <a href="#howto">使い方(最初の一歩)</a>
+      <a href="#news">更新情報</a>
+      <a href="#help">困ったときは</a>
+    </nav>
+    <div class="side-foot">
+      このページはビルダー(AI)が自動更新します。<span class="say">「ダッシュボード見せて」</span>でいつでも最新にできます。<br>
+      利用条件は TERMS.md、帰属表示は NOTICE.md を参照。
+    </div>
+  </aside>
+
+  <main>
+    <div id="data-error" hidden>
+      データ部分が壊れているため、一部が表示できていません。Claude に「ダッシュボードを直して」と話しかけると復旧してくれます。
+    </div>
+
+    <section id="proposals">
+      <div class="sec-head">
+        <span class="dot"></span><h2>今のあなたへの提案</h2><span class="count" data-stat="proposals">0</span>
+        <span class="hint">使うほど、ここに次の一手が届きます</span>
+      </div>
+      <div class="grid" id="grid-proposals">
+        <div class="empty">いまは提案はありません。使っていくと、ビルダーがここに次の一手を置いていきます。</div>
+      </div>
+    </section>
+
+    <section id="recipes">
+      <div class="sec-head c-recipe">
+        <span class="dot"></span><h2>レシピ在庫</h2><span class="count" data-stat="recipes">0</span>
+        <span class="hint">気に入ったら <span class="say">「このレシピで作って」</span></span>
+      </div>
+      <div class="grid" id="grid-recipes">
+        <div class="empty">レシピはまだありません。配布されたレシピファイル(〇〇.md)を <code>recipes/</code> に置くと、ここに並びます。</div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="sec-head c-project">
+        <span class="dot"></span><h2>生成したプロジェクト</h2><span class="count" data-stat="projects">0</span>
+        <span class="hint">置き場所はビルダー直下の <code>output/</code></span>
+      </div>
+      <div class="grid" id="grid-projects">
+        <div class="empty">まだありません。<span class="say">「ビルダーを起動」</span>と話しかけて、最初のプロジェクトを作りましょう。</div>
+      </div>
+    </section>
+
+    <section id="catalog">
+      <div class="sec-head">
+        <span class="dot"></span><h2>できること(話しかけるだけ)</h2>
+      </div>
+      <table>
+        <tr><th>困りごと・やりたいこと</th><th>Claude への言い方</th></tr>
+        <tr data-searchable><td>新しいプロジェクトの土台を作りたい</td><td class="say">「ビルダーを起動」</td></tr>
+        <tr data-searchable><td>配布されたレシピから同じものを作りたい</td><td class="say">「このレシピで作って」</td></tr>
+        <tr data-searchable><td>いま置いてあるレシピを一覧したい</td><td class="say">「レシピ一覧」「在庫レシピ見せて」</td></tr>
+        <tr data-searchable><td>前に作ったプロジェクトを最新の部品にしたい</td><td class="say">「○○をアップデートして」</td></tr>
+        <tr data-searchable><td>AI にデザインの好みを覚えさせたい(Web 系)</td><td class="say">「デザインの好みを教えたい」</td></tr>
+        <tr data-searchable><td>同じデザインでページをたくさん作りたい</td><td class="say">「量産ページの仕組みを入れて」</td></tr>
+        <tr data-searchable><td>作業の区切りで修正履歴(リビジョン)を残したい</td><td class="say">「リビジョンお願い」「セーブして」</td></tr>
+        <tr data-searchable><td>作ったプロジェクトで踏んだ失敗を、ビルダーの知識に還元したい</td><td class="say">「棚卸し」</td></tr>
+        <tr data-searchable><td>このページをもう一度見たい・更新したい</td><td class="say">「ダッシュボード見せて」</td></tr>
+        <tr data-searchable><td>自分のビルドを共有用レシピにしたい(Pro)</td><td class="say">「このプロジェクトのレシピを作って」</td></tr>
+        <tr data-searchable><td>業界知識を AI に渡して提案の精度を上げたい(Pro)</td><td class="say">「ドメイン知識をチェックして」</td></tr>
+        <tr data-searchable><td>提案された定型作業をボタン一発にしたい(Pro)</td><td class="say">「スキル化して」</td></tr>
+        <tr data-searchable><td>ビルダー自体をカスタマイズしたい(Pro)</td><td class="say">「開発者モードにして」</td></tr>
+      </table>
+    </section>
+
+    <section id="howto">
+      <div class="sec-head">
+        <span class="dot"></span><h2>使い方(最初の一歩)</h2>
+      </div>
+      <p class="sub">あなたが Claude Code または Codex で何かを作ろうと思ったら、このツールに話しかけてください。ヒアリング内容から、プロジェクト内容をしっかり書き込んだ <code>CLAUDE.md</code>、必要に応じた <code>AGENTS.md</code>、<code>.claude/</code>、<code>.codex/</code> など必要なもの一式が自動で作られます。言い換えるなら、<strong>選択した AI が自律的に、安全で的確に働ける仕事場</strong>を作るツールです。</p>
+      <div class="promise">
+        <div class="p"><b>事故らない</b>パスワードや API キーを初日にうっかり公開しない仕組みを最初から装備</div>
+        <div class="p"><b>リミットに達しにくい</b>リミット(利用上限)に達しにくくする自動提案をします</div>
+        <div class="p"><b>使うほど賢くなる</b>失敗や気づきが記録されて資産になる。同じ説明を毎回しなくていい</div>
+        <div class="p"><b>デザインの AI っぽさを除去</b>「AI が作りがちな無難で安っぽいデザイン」を防ぐ</div>
+      </div>
+
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <div class="title">ZIP を解凍して、好きな場所に置く</div>
+          <div class="desc">ダウンロードした ZIP ファイルを解凍(ダブルクリック)し、出てきた <code>kote2-builder</code> フォルダを任意の場所(書類フォルダなど)に配置します。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <div class="title">ビルダーのパスをコピーする</div>
+          <div class="desc">VS Code のサイドバー(エクスプローラー)で <code>kote2-builder</code> フォルダを右クリックしてメニューを開き、<strong>「パスをコピー」</strong>を選択します。Codex でフォルダを直接開く場合は、この手順を飛ばしても構いません。</div>
+          <div class="desc">フォルダがサイドバーに見えていない時は、メニューの「ファイル」→「フォルダーを開く」でビルダーのフォルダを開いてから右クリックしてください。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <div class="title">Claude Code または Codex で開く</div>
+          <div class="desc"><strong>Claude Code:</strong> Mac は <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> / Windows は <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> でコマンドパレットを開き、<strong>Open in New Tab</strong> を選びます。</div>
+          <div class="desc"><strong>Codex:</strong> <code>kote2-builder</code> をワークスペースとして開き、信頼できる配布元の場合だけ project と Hook を信頼します。</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div class="body">
+          <div class="title">「ビルダー起動」と話しかける</div>
+          <div class="desc">Claude Code では入力欄の 1 行目にコピーしたパスを貼り付け、改行して「ビルダー起動」と入力します。Codex でフォルダを開いた場合は、そのまま「ビルダー起動」と入力します。</div>
+          <div class="chat"><span class="label">入力例</span><span class="muted">/Users/あなたの名前/Documents/kote2-builder</span>
+ビルダー起動</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div class="body">
+          <div class="title">作りたいものを答える</div>
+          <div class="desc">ビルダーが挨拶して「何を作りたいか」を聞いてきたら成功です。作りたいものをひとこと入力してください。質問攻めにはしません——ビルダーが設計書を見せてくるので、OK を出せば初期プロジェクト一式がビルダーのフォルダ直下の <code>output/</code> に生成されます。</div>
+        </div>
+      </div>
+
+      <details>
+        <summary>あとからで OK:あなたの情報を教える(3 つのファイル)</summary>
+        <div class="inner">
+          <p class="sub">ビルダーには、あなたのことを覚えてもらうファイルが 3 つ入っています。<strong>全部空欄のままでも動く</strong>ので、まずは起動して触ってみて OK。余裕が出たら埋めると、AI の提案が的確になっていきます。</p>
+          <div class="card" style="margin-top:10px">
+            <div class="name">aboutme.md — あなたの基本情報</div>
+            <div class="desc">名前・業種・使っているツール・目標など。書ける範囲で OK です。</div>
+          </div>
+          <div class="card">
+            <div class="name">ai-behavior.md — AI への要望</div>
+            <div class="desc">口調・避けてほしいことなど。こちらも空欄 OK です。</div>
+          </div>
+          <div class="card">
+            <div class="name">design-knowledge.md — デザインの希望(Web サイトを作る人向け)</div>
+            <div class="desc">色・書体・余白の流儀・NG・参考サイトなど、あなたの審美眼を書くファイル。先に書いておけば、生成される全プロジェクトに引き継がれます。空欄でも標準のデザイン基準で動きます。</div>
+          </div>
+          <p class="note">どれもビルダーのフォルダ直下にあります。VS Code で開いて直接書いても、Claude に「aboutme を一緒に埋めて」と頼んでも構いません。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>レシピを取り込んで「同じものを再現」する</summary>
+        <div class="inner">
+          <p class="sub">配布されている<strong>レシピ</strong>(作り方の設計書)を取り込むと、紹介されていた成果物を<strong>あなたの手元で再現</strong>できます。</p>
+          <p class="sub">① 配布されたレシピファイル(<code>〇〇.md</code>)を <code>recipes/</code> フォルダ(無ければ作る。サブフォルダで整理しても OK)に置く<br>
+          ② ビルダーを起動して <span class="say">「このレシピで作って」</span> と言う</p>
+          <p class="sub">あとは AI がレシピの「建てる順番」「つまずき所の直し方」に沿って <code>output/</code> に一式を組み立てます。</p>
+          <p class="note">Free 版は<strong>取り込んで再現する</strong>ところまで。自分のビルドを<strong>レシピ化して共有する側</strong>と<strong>検証済みレシピの同梱カタログ</strong>は Pro 版の機能です。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>新しいバージョンへの引っ越し(移行)</summary>
+        <div class="inner">
+          <p class="sub">ビルダーが新しいバージョンになったら、前のフォルダで貯めた<strong>設定・レシピ・記録</strong>と、あなたが作った<strong>作品(output)</strong>を、新しいビルダーに引き継げます。<strong>古いフォルダはそのまま残る</strong>ので安心です。</p>
+          <div class="step" style="margin-top:12px">
+            <div class="num">1</div>
+            <div class="body">
+              <div class="title">新しいビルダーを開いて、引っ越しを頼む</div>
+              <div class="desc">新しいバージョンのフォルダを Claude Code または Codex で開き、<strong>古いビルダーフォルダのパス</strong>と「旧ビルダーの内容をこの本体に移行して」を一緒に送信します。</div>
+              <div class="chat"><span class="label">入力例</span><span class="muted">/Users/あなたの名前/Documents/前のビルダーフォルダ</span>
+旧ビルダーの内容をこの本体に移行して</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <div class="body">
+              <div class="title">「何を移すか」を確認して OK する</div>
+              <div class="desc">AI が<strong>移行設計書</strong>(=何を引き継ぐかの一覧)を見せます。中身を確認して OK と言えば、<strong>設定・レシピ・記録は AI が引き継ぎます</strong>。いきなりコピーはしないので安心です。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <div class="body">
+              <div class="title">作品(output)は自分の手でコピー</div>
+              <div class="desc">あなたの作品が入った <code>output</code> フォルダは大切なので、AI は勝手に動かしません。<strong>古いフォルダの中の <code>output</code> フォルダを、新しいビルダーの中にドラッグしてコピー</strong>してください(Mac は Finder、Windows はエクスプローラー)。コマンドのほうが良ければ、AI に言えば(お使いの Mac / Windows に合わせて)出してくれます。</div>
+            </div>
+          </div>
+          <p class="note">あなたの個人情報(名前など)は各プロジェクトの中に入っているので、<code>output</code> を運べば一緒に付いてきます。取りこぼしはありません。ビルダー直下の <code>aboutme.md</code> が空に見えても心配いりません。</p>
+        </div>
+      </details>
+    </section>
+
+    <section id="pro">
+      <div class="sec-head">
+        <span class="dot"></span><h2>Pro 版でできること</h2>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="name">レシピ(共有できる「作り方の設計書」)</div>
+          <div class="desc">Web やアプリを作ると、AI が<strong>作りながら「決めたこと・作った順番・つまずいた所の直し方」を自動で <code>recipe/draft.md</code> に記録</strong>していきます。一区切りしたら<span class="say">「このプロジェクトのレシピを作って」</span>と頼むと、共有用のレシピができます。ドメイン名・パス・メール・API キーなどの実値は最初から書かず、完成時に機械チェックもするので、安心して共有できます。</div>
+        </div>
+        <div class="card">
+          <div class="name">ドメイン知識ファイル(domain-knowledge.md)</div>
+          <div class="desc">あなたの業界知識(判断軸・地雷・用語)を AI に渡す専用ファイル。<code>domain-samples/</code> に業種別のお手本が入っています。書き終わったら<span class="say">「ドメイン知識をチェックして」</span>と頼むと、AI が読んで質問しながら精度を上げてくれます。</div>
+        </div>
+        <div class="card">
+          <div class="name">スキル提案ボード</div>
+          <div class="desc">AI があなたの作業を見ていて「これ、ボタン一発の定型作業にしませんか?」と提案してくれる仕組み。提案はプロジェクトのダッシュボードに表示され、<span class="say">「スキル化して」</span>と返事をすればそのまま作ってくれます。</div>
+        </div>
+        <div class="card">
+          <div class="name">開発者モード(ビルダー本体のカスタマイズ)</div>
+          <div class="desc">ビルダーの振る舞いそのものを AI と一緒に編集できるモードです。切り替えはターミナルで <code>cp CLAUDE.dev.md CLAUDE.md</code>、通常モードに戻すのは <code>cp CLAUDE.live.md CLAUDE.md</code>。切り替えたら使用中の Claude Code または Codex を一度閉じて開き直してください。詳しくは README.md を参照。</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news">
+      <div class="sec-head">
+        <span class="dot"></span><h2>更新情報</h2><span class="count" data-stat="news">0</span>
+      </div>
+      <ul class="news" id="list-news">
+        <li class="empty" style="border:none">まだ更新情報はありません。</li>
+      </ul>
+    </section>
+
+    <section id="help">
+      <div class="sec-head">
+        <span class="dot"></span><h2>困ったときは</h2>
+      </div>
+      <p class="sub">このフォルダを開いた状態で、Claude に日本語でそのまま聞いてください。非エンジニア視点で答えてくれます。</p>
+      <ul class="plain">
+        <li><span class="say">「このファイル何?」</span> <span class="sub">— フォルダの中身の役割を説明してくれます</span></li>
+        <li><span class="say">「使い方教えて」</span> <span class="sub">— 今の状態に合わせて次の一手を案内してくれます</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>本ビルダーは Anthropic 公式の製品・教材ではありません。手でこのページを編集しても、次の自動更新で上書きされることがあります。</p>
+      <p>Created by <strong>kote2</strong> ・ <a href="https://www.youtube.com/@kote2tokyo">YouTube</a> ・ <a href="https://note.com/kote2223">Note</a></p>
+    </footer>
+  </main>
+</div>
+
+<!-- ============ AI 更新ブロック(ここだけ編集する)============
+  下の <script id="dashboard-data"> 内の JSON だけを Edit で書き換える。
+  HTML / CSS / JS には触れない(デザイン崩れ防止)。件数タイルは自動集計。
+  スキーマ:
+    version   : ビルダーの VERSION 文字列(例 "3.13.0")
+    updated   : このページの最終更新日 "YYYY-MM-DD"
+    proposals : 今のあなたへの提案(最大 5 件・古いものから押し出す)
+                [{ "title", "desc", "say"(任意: そのまま話しかけられる一言) }]
+    recipes   : 在庫レシピ(recipes/**/*.md と再帰で同期)
+                [{ "id"(ファイル名から拡張子を除いたもの), "title", "desc",
+                   "status"("verified"|"experimental"|"skeleton"),
+                   "mac"(true|false), "win"(true|false), "tier"(任意 "free") }]
+    projects  : 生成したプロジェクト(output/ を走査。各 README 刻印からバージョン)
+                [{ "name", "version", "date"(生成日), "desc",
+                   "latest"(true=最新 / false=アップデートできます) }]
+    news      : 更新情報(新しい順)
+                [{ "date": "YYYY-MM-DD", "text" }]
+  文章はプレーンテキストで書く(HTML タグ・Markdown 記法は使わない)。
+============================================================= -->
+<script id="dashboard-data" type="application/json">
+{
+  "version": "3.29.1",
+  "updated": "2026-08-22",
+  "proposals": [
+    {
+      "title": "まずは最初のプロジェクトを作ってみる",
+      "desc": "作りたいものをひとこと言うだけで、選択した AI が安全に働ける仕事場一式が output/ に生成されます。",
+      "say": "ビルダーを起動"
+    },
+    {
+      "title": "あなたのことを教えると提案が的確になります",
+      "desc": "aboutme.md(基本情報)と ai-behavior.md(AI への要望)は空欄でも動きますが、埋めるほど提案があなたに寄ります。",
+      "say": "aboutme を一緒に埋めて"
+    },
+    {
+      "title": "同梱レシピで「再現する」を体験できます",
+      "desc": "検証済みレシピが recipes/ に入っています。作り方の設計書どおりに、AI が建てる順番と検証つきで組み立てます。",
+      "say": "在庫レシピ見せて"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "claude-docker-sandbox",
+      "title": "このフォルダだけを Claude Code の作業領域に閉じ込める",
+      "desc": "「PC の中の他のファイルに触らせず、渡した1フォルダだけを Claude Code の作業場所にする」",
+      "status": "verified",
+      "mac": true,
+      "win": false,
+      "path": "recipes/official/utils/claude-docker-sandbox.md",
+      "tier": "free"
+    },
+    {
+      "id": "file-bin",
+      "title": "file-bin",
+      "desc": "手元のファイルをドラッグ&ドロップ(または 1 コマンド)で配布用 URL に変える、自作ギガファイル便を再現するレシピ。",
+      "status": "verified",
+      "mac": true,
+      "win": true,
+      "path": "recipes/official/web/file-bin.md",
+      "tier": "free"
+    },
+    {
+      "id": "html-share-board",
+      "title": "html-share-board",
+      "desc": "手元の HTML ファイルを 1 コマンドで「社内(許可したメンバー)限定の URL」にして配り、",
+      "status": "verified",
+      "mac": true,
+      "win": true,
+      "path": "recipes/official/web/html-share-board.md",
+      "tier": "free"
+    },
+    {
+      "id": "manga-koma-search",
+      "title": "manga-koma-search",
+      "desc": "漫画 PDF 1 冊を「セリフで検索できるコマ画像の静的サイト」に変える 2 層構成。",
+      "status": "verified",
+      "mac": true,
+      "win": true,
+      "path": "recipes/official/web/manga-koma-search.md",
+      "tier": "free"
+    },
+    {
+      "id": "model-bench",
+      "title": "model-bench",
+      "desc": "新モデル登場日に「同じ 3 タスクを新旧モデルで 1 回ずつ走らせ、トランスクリプトからコスト・",
+      "status": "verified",
+      "mac": false,
+      "win": true,
+      "path": "recipes/official/utils/model-bench.md"
+    },
+    {
+      "id": "notion-wp",
+      "title": "Notion 風 WordPress",
+      "desc": "「WordPress を Notion のように使う」自作ブロックテーマを再現する設計書。",
+      "status": "verified",
+      "mac": true,
+      "win": false,
+      "path": "recipes/official/web/notion-wp.md",
+      "tier": "free"
+    },
+    {
+      "id": "sandbox-handson",
+      "title": "Claude Code サンドボックスを「箱なし vs 箱あり」で体感する学習道場",
+      "desc": "Claude Code 自身のサンドボックス機能(Bash の OS レベル隔離)を、壊しても平気な隔離ラボで手を動かして理解する設計書(シード)。座学ではなく、同じ実験を「箱なし(素)」と「箱あり(隔離)」の2セッションで走らせて対比で腹落ちさせるのが核。",
+      "status": "verified",
+      "mac": true,
+      "win": false,
+      "path": "recipes/official/utils/sandbox-handson.md",
+      "tier": "free"
+    },
+    {
+      "id": "xserver-site-ops",
+      "title": "Xserver 上のサイトを安全に運用する(汎用核 + サイト種別アダプタ)",
+      "desc": "「Xserver 上の本番サイトを、Claude Code から 診断(MCP) し、変更は ローカルで確認 → 安全にデプロイ できる保守ワークスペース」を再現する設計書(シード)。サイト種別(WordPress / 静的 HTML / …)はアダプタとして差し替える。普遍核(CORE)はサイト種…",
+      "status": "verified",
+      "mac": true,
+      "win": false,
+      "path": "recipes/official/utils/xserver-site-ops.md"
+    },
+    {
+      "id": "xserver-wp-triage",
+      "title": "Xserver 上の WordPress を Claude Code で直す",
+      "desc": "「Xserver 上の既存 WordPress サイトを、Claude Code から 診断(MCP)して、ファイルを直接修正(SSH マウント) できる保守ワークスペース」を再現する設計書。",
+      "status": "verified",
+      "mac": true,
+      "win": false,
+      "path": "recipes/official/utils/xserver-wp-triage.md"
+    }
+  ],
+  "projects": [
+    {
+      "name": "国際興業バス記事メディア(kokusai-kogyo-bus-blog)",
+      "version": "3.29.1",
+      "date": "2026-08-22",
+      "desc": "国際興業バスの記事をSEO対策込みで書いて公開する記事メディア(Astro)",
+      "latest": true
+    }
+  ],
+  "news": [
+    {
+      "date": "2026-08-22",
+      "text": "新しいプロジェクト「国際興業バス記事メディア」を output/kokusai-kogyo-bus-blog/ に生成しました"
+    },
+    {
+      "date": "2026-08-04",
+      "text": "ビルダー v3.29.1 をお迎えしました。このページが使い方マニュアルを兼ねた玄関です(ビルダーが自動更新します)"
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var raw = document.getElementById("dashboard-data").textContent;
+  var data;
+  try { data = JSON.parse(raw); } catch (e) {
+    document.getElementById("data-error").hidden = false;
+    return;
+  }
+  data = data || {};
+  var proposals = data.proposals || [];
+  var recipes = data.recipes || [];
+  var projects = data.projects || [];
+  var news = data.news || [];
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function bindAll(key, value) {
+    document.querySelectorAll('[data-bind="' + key + '"]').forEach(function (n) { n.textContent = value; });
+  }
+  function statAll(key, value) {
+    document.querySelectorAll('[data-stat="' + key + '"]').forEach(function (n) { n.textContent = value; });
+  }
+
+  if (data.version) bindAll("version", data.version);
+  if (data.updated) bindAll("updated", data.updated);
+
+  // --- 提案 ---
+  var gp = document.getElementById("grid-proposals");
+  proposals.slice(0, 5).forEach(function (p) {
+    var c = el("div", "card"); c.setAttribute("data-searchable", "");
+    c.appendChild(el("div", "name", p.title || ""));
+    c.appendChild(el("div", "desc", p.desc || ""));
+    if (p.say) c.appendChild(el("span", "saychip", "「" + p.say + "」"));
+    gp.appendChild(c);
+  });
+
+  // --- レシピ在庫 ---
+  var gr = document.getElementById("grid-recipes");
+  recipes.forEach(function (r) {
+    var c = el("div", "card recipe"); c.setAttribute("data-searchable", "");
+    var b = el("div", "badges");
+    var st = r.status || "";
+    if (st === "verified") b.appendChild(el("span", "badge ok", "検証済み"));
+    else if (st === "experimental") b.appendChild(el("span", "badge warn", "実験的"));
+    else if (st) b.appendChild(el("span", "badge gray", "骨組み"));
+    b.appendChild(el("span", "badge " + (r.mac ? "ok" : "gray"), r.mac ? "Mac ✓" : "Mac 未検証"));
+    b.appendChild(el("span", "badge " + (r.win ? "ok" : "gray"), r.win ? "Win ✓" : "Win 未検証"));
+    if (r.tier === "free") b.appendChild(el("span", "badge info", "無料サンプル"));
+    c.appendChild(b);
+    c.appendChild(el("div", "name", r.title || r.id || ""));
+    if (r.id) c.appendChild(el("div", "meta", r.path || ("recipes/" + r.id + ".md")));
+    c.appendChild(el("div", "desc", r.desc || ""));
+    c.appendChild(el("span", "saychip", "「" + (r.id || "これ") + " で作って」"));
+    gr.appendChild(c);
+  });
+
+  // --- 生成プロジェクト ---
+  var gj = document.getElementById("grid-projects");
+  projects.forEach(function (p) {
+    var c = el("div", "card project"); c.setAttribute("data-searchable", "");
+    var b = el("div", "badges");
+    if (p.latest === false) b.appendChild(el("span", "badge warn", "アップデートできます"));
+    else b.appendChild(el("span", "badge ok", "最新"));
+    c.appendChild(b);
+    c.appendChild(el("div", "name", p.name || ""));
+    var meta = [];
+    if (p.version) meta.push("v" + String(p.version).replace(/^v/, ""));
+    if (p.date) meta.push(p.date + " 生成");
+    if (meta.length) c.appendChild(el("div", "meta", meta.join(" ・ ")));
+    c.appendChild(el("div", "desc", p.desc || ""));
+    gj.appendChild(c);
+  });
+
+  // --- 更新情報 ---
+  var ln = document.getElementById("list-news");
+  if (news.length) {
+    ln.innerHTML = "";
+    news.forEach(function (n) {
+      var li = el("li"); li.setAttribute("data-searchable", "");
+      li.appendChild(el("span", "d", n.date || ""));
+      li.appendChild(el("span", "t", n.text || ""));
+      ln.appendChild(li);
+    });
+  }
+
+  // --- 件数(タイル・ナビ・見出し) ---
+  statAll("proposals", proposals.length);
+  statAll("recipes", recipes.length);
+  statAll("projects", projects.length);
+  statAll("news", news.length);
+  statAll("catalog", document.querySelectorAll("#catalog tr[data-searchable]").length);
+
+  // --- 空状態の出し分け ---
+  [["grid-proposals", proposals.length], ["grid-recipes", recipes.length], ["grid-projects", projects.length]]
+    .forEach(function (pair) {
+      var grid = document.getElementById(pair[0]);
+      var empty = grid.querySelector(".empty");
+      if (empty && pair[1] > 0) empty.hidden = true;
+    });
+
+  // --- 検索(カード・行の絞り込み) ---
+  var input = document.getElementById("search");
+  input.addEventListener("input", function () {
+    var q = input.value.trim().toLowerCase();
+    document.querySelectorAll("[data-searchable]").forEach(function (n) {
+      n.style.display = (!q || n.textContent.toLowerCase().indexOf(q) !== -1) ? "" : "none";
+    });
+  });
+})();
+</script>
+</body>
+</html>
