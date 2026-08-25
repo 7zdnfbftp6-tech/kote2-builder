@@ -282,6 +282,11 @@
   "updated": "2026-08-25",
   "proposals": [
     {
+      "title": "求人ページの本文幅をヘッダに揃える",
+      "desc": "wordpress/job-article-style.codesnippets.php の中身を最新版に差し替えると、本文カラムの幅がヘッダ(紺色バー)と同じ幅まで広がります。既存の「job-article-style」スニペットを開いて中身を丸ごと置き換え、保存してください。",
+      "say": "本文の幅がヘッダと揃ったか確認したい"
+    },
+    {
       "title": "追加6社の求人作成を本番に反映する",
       "desc": "wordpress/bulk-import-job-batch2.codesnippets.php をCode Snippetsに追加し、/wp-admin/?run_job_import_batch2=1 を開くと6社分を下書き作成できます。",
       "say": "追加6社の作成がうまくいったか確認したい"
@@ -331,6 +336,10 @@
     }
   ],
   "activity": [
+    {
+      "date": "2026-08-25",
+      "text": "求人ページの本文幅がヘッダより狭かった問題を修正(max-width:760pxの決め打ちをやめ、親コンテナ幅いっぱいに広がるよう変更)"
+    },
     {
       "date": "2026-08-25",
       "text": "追加6社(関東バス・東武バス・小田急バス・京王バス・西東京バス・都営バス)の求人ページを作成"
