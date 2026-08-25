@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プロジェクト・ダッシュボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* kote2 Builder 標準テーマ(正本: templates/design-theme.md)。緑枠 + クリーム地。 */
+  :root {
+    --frame: #71804b;
+    --bg: #f0efe2;
+    --surface: #ffffff;
+    --text: #2f3a1c;
+    --sub: #5a6242;
+    --accent: #71804b;
+    --accent-soft: #dde0c8;
+    --line: #d9dcc3;
+    --ok: #4b6b2a;   --ok-bg: #e6ead4;
+    --warn: #b05c2e; --warn-bg: #f6e9de;
+    --info: #5a6242; --info-bg: #e9ead9;
+    --code-bg: #f6f5ea;
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--frame); color: var(--text);
+    font-size: 15px; line-height: 1.8;
+  }
+  .layout { display: flex; min-height: calc(100vh - 36px); margin: 18px; background: var(--bg); }
+
+  /* ===== サイドバー ===== */
+  aside {
+    width: 300px; flex: none;
+    background: var(--surface); border-right: 1px solid var(--line);
+    position: sticky; top: 18px; height: calc(100vh - 36px); overflow-y: auto;
+    padding: 28px 22px; display: flex; flex-direction: column; gap: 22px;
+  }
+  .brand .kind { font-size: 11px; color: var(--sub); font-weight: 700; letter-spacing: .14em; }
+  .brand h1 { font-size: 20px; font-weight: 900; line-height: 1.35; letter-spacing: .01em; margin-top: 4px; overflow-wrap: anywhere; }
+  .brand .tagline { font-size: 13px; color: var(--sub); margin-top: 10px; }
+  .brand .ver { font-size: 12px; color: var(--sub); margin-top: 8px; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile { border: 1px solid var(--line); border-radius: var(--radius); padding: 13px 12px 10px; }
+  .tile b { display: block; font-size: 27px; font-weight: 900; color: var(--accent); line-height: 1.25; font-feature-settings: "tnum"; }
+  .tile b.small { font-size: 17px; padding: 5px 0; overflow-wrap: anywhere; }
+  .tile span { font-size: 11.5px; color: var(--sub); }
+  .search input {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid var(--line); border-radius: 8px;
+    font: inherit; font-size: 13px; background: var(--bg); color: var(--text);
+  }
+  .search input:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  nav { display: flex; flex-direction: column; }
+  nav a {
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    padding: 8px 10px; border-radius: 8px;
+    color: var(--text); text-decoration: none; font-size: 13.5px; font-weight: 500;
+  }
+  nav a:hover { background: var(--accent-soft); }
+  nav a .n { font-size: 11px; color: var(--sub); background: var(--bg); border: 1px solid var(--line); border-radius: 99px; padding: 0 8px; font-feature-settings: "tnum"; }
+  .side-foot { margin-top: auto; font-size: 11.5px; color: var(--sub); line-height: 1.9; border-top: 1px solid var(--line); padding-top: 14px; }
+
+  /* ===== メイン ===== */
+  main { flex: 1; min-width: 0; padding: 36px 40px 72px; max-width: 1180px; }
+  section { margin-bottom: 52px; }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  .sec-head .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); flex: none; align-self: center; }
+  .sec-head.c-activity .dot { background: var(--info); }
+  .sec-head.c-info .dot { background: var(--ok); }
+  .sec-head.c-linked .dot { background: var(--warn); }
+  h2 { font-size: 16px; font-weight: 700; letter-spacing: .04em; }
+  .sec-head .count { font-size: 12px; font-weight: 700; color: var(--sub); background: var(--surface); border: 1px solid var(--line); border-radius: 99px; padding: 0 9px; }
+  .sec-head .hint { margin-left: auto; font-size: 12.5px; color: var(--sub); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); border-top: 3px solid var(--accent);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .card .name { font-weight: 700; font-size: 15px; line-height: 1.5; }
+  .card .desc { font-size: 13px; color: var(--sub); flex: 1; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 9px; }
+  .badge.ok { color: var(--ok); background: var(--ok-bg); }
+  .badge.gray { color: var(--sub); background: var(--code-bg); }
+  .badge.info { color: var(--info); background: var(--info-bg); }
+  .say { color: var(--accent); font-weight: 700; }
+  .card .place {
+    font-size: 11.5px; color: var(--sub); overflow-wrap: anywhere;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  .saychip { display: inline-block; align-self: flex-start; font-size: 12.5px; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 2px 10px; font-weight: 700; }
+  .empty {
+    grid-column: 1 / -1; border: 1px dashed var(--line); border-radius: var(--radius);
+    padding: 22px; text-align: center; color: var(--sub); font-size: 13.5px;
+  }
+
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; vertical-align: top; }
+  th { font-weight: 700; color: var(--sub); font-size: 12.5px; letter-spacing: .04em; }
+  tr:last-child td, tr:last-child th { border-bottom: none; }
+  #rows-info th { width: 160px; }
+  code {
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 4px;
+    padding: 0 6px; font-size: 12.5px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  ul.news { list-style: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 18px; }
+  ul.news li { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  ul.news li:last-child { border-bottom: none; }
+  ul.news .d { flex: none; width: 92px; color: var(--sub); font-weight: 700; font-size: 12.5px; font-feature-settings: "tnum"; }
+  ul.news .t { color: var(--text); min-width: 0; }
+  ul.news li.empty { border: none; display: block; text-align: center; }
+
+  ul.plain { list-style: none; }
+  ul.plain li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  ul.plain li:last-child { border-bottom: none; }
+  .sub { color: var(--sub); font-size: 13px; }
+
+  #data-error {
+    background: var(--warn-bg); color: var(--warn);
+    border: 1px solid #e0c3a8; border-radius: var(--radius);
+    padding: 14px 18px; margin-bottom: 28px; font-size: 13.5px; font-weight: 500;
+  }
+  main > footer { color: var(--sub); font-size: 12.5px; border-top: 1px solid var(--line); padding-top: 20px; line-height: 2; }
+
+  @media (max-width: 960px) {
+    .layout { display: block; margin: 10px; min-height: calc(100vh - 20px); }
+    aside { position: static; width: auto; height: auto; border-right: none; border-bottom: 1px solid var(--line); }
+    .side-foot { margin-top: 0; }
+    main { padding: 24px 16px 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside>
+    <div class="brand">
+      <p class="kind">プロジェクト・ダッシュボード</p>
+      <h1 data-bind="name">—</h1>
+      <p class="tagline" data-bind="tagline"></p>
+      <p class="ver">ダッシュボード最終更新 <span data-bind="updated">—</span></p>
+    </div>
+    <div class="tiles">
+      <div class="tile"><b data-stat="proposals">0</b><span>今の提案</span></div>
+      <div class="tile"><b data-stat="catalog">0</b><span>できること</span></div>
+      <div class="tile"><b data-stat="activity">0</b><span>最近の動き</span></div>
+      <div class="tile"><b class="small" data-bind="stamp">—</b><span>生成時ビルダー</span></div>
+    </div>
+    <div class="search">
+      <input id="search" type="search" placeholder="提案・できること・動きを検索">
+    </div>
+    <nav>
+      <a href="#proposals">今のあなたへの提案 <span class="n" data-stat="proposals">0</span></a>
+      <a href="#catalog">できること(言い方一覧)</a>
+      <a href="#linked" id="nav-linked" hidden>関連プロジェクト <span class="n" data-stat="linked">0</span></a>
+      <a href="#activity">最近の動き <span class="n" data-stat="activity">0</span></a>
+      <a href="#info">プロジェクト情報</a>
+      <a href="#help">困ったときは</a>
+    </nav>
+    <div class="side-foot">
+      このページはこのプロジェクトの AI が自動更新します。<span class="say">「ダッシュボード見せて」</span>(または <code>/dashboard</code>)でいつでも最新にできます。
+    </div>
+  </aside>
+
+  <main>
+    <div id="data-error" hidden>
+      データ部分が壊れているため、一部が表示できていません。Claude に「ダッシュボードを直して」と話しかけると復旧してくれます。
+    </div>
+
+    <section id="proposals">
+      <div class="sec-head">
+        <span class="dot"></span><h2>今のあなたへの提案</h2><span class="count" data-stat="proposals">0</span>
+        <span class="hint">使うほど、ここに次の一手が届きます</span>
+      </div>
+      <div class="grid" id="grid-proposals">
+        <div class="empty">いまは提案はありません。作業を進めると、AI がここに次の一手を置いていきます。</div>
+      </div>
+    </section>
+
+    <section id="catalog">
+      <div class="sec-head">
+        <span class="dot"></span><h2>できること(話しかけるだけ)</h2><span class="count" data-stat="catalog">0</span>
+      </div>
+      <table>
+        <tbody id="rows-catalog">
+        <tr><th>困りごと・やりたいこと</th><th>Claude への言い方</th></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="linked" hidden>
+      <div class="sec-head c-linked">
+        <span class="dot"></span><h2>関連プロジェクト</h2><span class="count" data-stat="linked">0</span>
+        <span class="hint">実体はコピーせず、元の場所を呼び出します</span>
+      </div>
+      <div class="grid" id="grid-linked"></div>
+    </section>
+
+    <section id="activity">
+      <div class="sec-head c-activity">
+        <span class="dot"></span><h2>最近の動き</h2><span class="count" data-stat="activity">0</span>
+        <span class="hint">リビジョン(修正履歴)の保存と連動して増えます</span>
+      </div>
+      <ul class="news" id="list-activity">
+        <li class="empty">まだ大きな動きはありません。</li>
+      </ul>
+    </section>
+
+    <section id="info">
+      <div class="sec-head c-info">
+        <span class="dot"></span><h2>プロジェクト情報</h2>
+      </div>
+      <table>
+        <tbody id="rows-info"></tbody>
+      </table>
+    </section>
+
+    <section id="help">
+      <div class="sec-head">
+        <span class="dot"></span><h2>困ったときは</h2>
+      </div>
+      <p class="sub">このフォルダを開いた状態で、Claude に日本語でそのまま聞いてください。</p>
+      <ul class="plain">
+        <li><span class="say">「このファイル何?」</span> <span class="sub">— フォルダの中身の役割を説明してくれます</span></li>
+        <li><span class="say">「使い方教えて」</span> <span class="sub">— 今の状態に合わせて次の一手を案内してくれます</span></li>
+        <li><span class="say">「リビジョンお願い」「セーブして」</span> <span class="sub">— 今の状態を記録して、あとで戻せるようにします</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>このページは AI が自動更新します。手で編集しても次の更新で上書きされることがあります。<span data-bind="stampline"></span></p>
+    </footer>
+  </main>
+</div>
+
+<!-- ============ AI 更新ブロック(ここだけ編集する)============
+  下の <script id="dashboard-data"> 内の JSON だけを Edit で書き換える。
+  HTML / CSS / JS には触れない(デザイン崩れ防止)。件数タイルは自動集計。
+  スキーマ:
+    project   : { "name", "tagline"(ひとこと説明),
+                  "usecase"(用途: Web / 自動化 / AI 秘書 等), "stack"(配列),
+                  "generated"("YYYY-MM-DD" 生成日), "builderVersion"(README 刻印の生成バージョン),
+                  "updatedByBuilder"(任意: 最後にアップデートした日),
+                  "info"(任意: 追加行 [{ "label", "value" }]) }
+    updated   : このページの最終更新日 "YYYY-MM-DD"
+    proposals : 今のあなたへの提案(最大 5 件・古いものから押し出す。skill-ideas 統合)
+                [{ "title", "desc", "say"(任意: そのまま話しかけられる一言) }]
+    catalog   : できること(CLAUDE.md の「できること」と同期)
+                [{ "want"(困りごと・やりたいこと), "say"(言い方) }]
+    activity  : 最近の動き(新しい順。リビジョン保存と連動して 1 行ずつ追記)
+                [{ "date": "YYYY-MM-DD", "text" }]
+    linked    : 任意: 関連プロジェクト(このプロジェクトが呼び出す・連携する別プロジェクト。
+                台帳 automations.md があるプロジェクトはその登録と同期。空・省略なら枠ごと非表示)
+                [{ "name", "desc"(できること 1 行), "say"(任意: 呼び出しの一言),
+                   "freq"(任意: 目標・頻度), "place"(任意: 元プロジェクトの場所) }]
+  文章はプレーンテキストで書く(HTML タグ・Markdown 記法は使わない)。
+============================================================= -->
+<script id="dashboard-data" type="application/json">
+{{DATA_JSON}}
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var raw = document.getElementById("dashboard-data").textContent;
+  var data;
+  try { data = JSON.parse(raw); } catch (e) {
+    document.getElementById("data-error").hidden = false;
+    return;
+  }
+  data = data || {};
+  var project = data.project || {};
+  var proposals = data.proposals || [];
+  var catalog = data.catalog || [];
+  var activity = data.activity || [];
+  var linked = data.linked || [];
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function bindAll(key, value) {
+    document.querySelectorAll('[data-bind="' + key + '"]').forEach(function (n) { n.textContent = value; });
+  }
+  function statAll(key, value) {
+    document.querySelectorAll('[data-stat="' + key + '"]').forEach(function (n) { n.textContent = value; });
+  }
+
+  if (project.name) {
+    bindAll("name", project.name);
+    document.title = project.name + " — ダッシュボード";
+  }
+  if (project.tagline) bindAll("tagline", project.tagline);
+  if (data.updated) bindAll("updated", data.updated);
+  if (project.builderVersion) {
+    var ver = "v" + String(project.builderVersion).replace(/^v/, "");
+    bindAll("stamp", ver);
+    bindAll("stampline", "kote2 Builder " + ver + " で生成。");
+  }
+
+  // --- 提案 ---
+  var gp = document.getElementById("grid-proposals");
+  proposals.slice(0, 5).forEach(function (p) {
+    var c = el("div", "card"); c.setAttribute("data-searchable", "");
+    c.appendChild(el("div", "name", p.title || ""));
+    c.appendChild(el("div", "desc", p.desc || ""));
+    if (p.say) c.appendChild(el("span", "saychip", "「" + p.say + "」"));
+    gp.appendChild(c);
+  });
+
+  // --- できること ---
+  var rc = document.getElementById("rows-catalog");
+  catalog.forEach(function (row) {
+    var tr = el("tr"); tr.setAttribute("data-searchable", "");
+    tr.appendChild(el("td", null, row.want || ""));
+    tr.appendChild(el("td", "say", "「" + (row.say || "") + "」"));
+    rc.appendChild(tr);
+  });
+
+  // --- 関連プロジェクト(データがある時だけ枠ごと表示) ---
+  if (linked.length) {
+    document.getElementById("linked").hidden = false;
+    var navLinked = document.getElementById("nav-linked");
+    if (navLinked) navLinked.hidden = false;
+    var gl = document.getElementById("grid-linked");
+    linked.forEach(function (p) {
+      var c = el("div", "card"); c.setAttribute("data-searchable", "");
+      c.appendChild(el("div", "name", p.name || ""));
+      if (p.desc) c.appendChild(el("div", "desc", p.desc));
+      if (p.freq) {
+        var bw = el("div", "badges");
+        bw.appendChild(el("span", "badge gray", p.freq));
+        c.appendChild(bw);
+      }
+      if (p.say) c.appendChild(el("span", "saychip", "「" + p.say + "」"));
+      if (p.place) c.appendChild(el("div", "place", p.place));
+      gl.appendChild(c);
+    });
+  }
+
+  // --- 最近の動き ---
+  var la = document.getElementById("list-activity");
+  if (activity.length) {
+    la.innerHTML = "";
+    activity.forEach(function (a) {
+      var li = el("li"); li.setAttribute("data-searchable", "");
+      li.appendChild(el("span", "d", a.date || ""));
+      li.appendChild(el("span", "t", a.text || ""));
+      la.appendChild(li);
+    });
+  }
+
+  // --- プロジェクト情報 ---
+  var ri = document.getElementById("rows-info");
+  function infoRow(label, value) {
+    if (value == null || value === "") return;
+    var tr = el("tr");
+    tr.appendChild(el("th", null, label));
+    var td = el("td");
+    if (Array.isArray(value)) {
+      var wrap = el("div", "badges");
+      value.forEach(function (v) { wrap.appendChild(el("span", "badge info", v)); });
+      td.appendChild(wrap);
+    } else {
+      td.textContent = value;
+    }
+    tr.appendChild(td);
+    ri.appendChild(tr);
+  }
+  infoRow("プロジェクト名", project.name);
+  infoRow("用途", project.usecase);
+  infoRow("スタック", project.stack);
+  infoRow("生成日", project.generated);
+  infoRow("生成時ビルダー", project.builderVersion ? "v" + String(project.builderVersion).replace(/^v/, "") : null);
+  infoRow("最終アップデート", project.updatedByBuilder);
+  (project.info || []).forEach(function (r) { infoRow(r.label, r.value); });
+
+  // --- 件数(タイル・ナビ・見出し) ---
+  statAll("proposals", proposals.length);
+  statAll("catalog", catalog.length);
+  statAll("activity", activity.length);
+  statAll("linked", linked.length);
+
+  // --- 空状態の出し分け ---
+  var pe = gp.querySelector(".empty");
+  if (pe && proposals.length > 0) pe.hidden = true;
+
+  // --- 検索(カード・行の絞り込み) ---
+  var input = document.getElementById("search");
+  input.addEventListener("input", function () {
+    var q = input.value.trim().toLowerCase();
+    document.querySelectorAll("[data-searchable]").forEach(function (n) {
+      n.style.display = (!q || n.textContent.toLowerCase().indexOf(q) !== -1) ? "" : "none";
+    });
+  });
+})();
+</script>
+</body>
+</html>
