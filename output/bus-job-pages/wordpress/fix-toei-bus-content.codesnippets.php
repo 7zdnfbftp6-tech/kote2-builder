@@ -1,51 +1,34 @@
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>都営バスの求人 | バス運転手募集</title>
-</head>
-<body>
+/**
+ * BusJob - 「都営バス」の求人ページを実データに差し替え(1回だけ実行するスニペット)
+ *
+ * 都営バスは東京都交通局が運営する公営バスで、独自の「都営バス運転手養成枠採用」
+ * 制度があり、貸切バス・高速バス事業を行わない路線バス専業という特徴があるため、
+ * 他社と共通の汎用文ではなく、都営バス固有の実データで書き直しています。
+ *
+ * 使い方:
+ * 1. Code Snippets で「新規追加」→ このコード全体を貼り付けて保存・有効化
+ * 2. 管理者アカウントでログインした状態で、ブラウザで以下のURLを1回だけ開く:
+ *    https://busjob.net/wp-admin/?run_toei_bus_fix=1
+ * 3. 「更新しました」と出れば完了です
+ * 4. 完了したら、このスニペットは無効化しておいてください
+ */
+
+add_action( 'admin_init', function () {
+
+	if ( empty( $_GET['run_toei_bus_fix'] ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'この操作を実行する権限がありません。管理者アカウントでログインしてから開いてください。' );
+	}
+
+	if ( get_option( 'bus_toei_bus_fix_done' ) ) {
+		wp_die( 'この修正は既に実行済みです(bus_toei_bus_fix_done オプション)。もう一度やり直したい場合は、管理画面から wp_options の bus_toei_bus_fix_done を削除してください。' );
+	}
+
+	$content = <<<'TOEIBUS'
 <div class="bj-article">
-<style>
-.bj-article { font-family: "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; color:#2b2f36; line-height:1.9; font-size:15px; max-width:760px; margin:0 auto; }
-.bj-article * { box-sizing:border-box; }
-.bj-cat { display:inline-block; font-size:12px; font-weight:700; color:#fff; background:#1e4d8b; padding:4px 12px; border-radius:4px; margin:0 0 12px; }
-.bj-meta { display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:#6b7280; margin:0 0 20px; }
-.bj-art { width:100%; border-radius:8px; overflow:hidden; display:block; margin:0 0 8px; }
-.bj-toc { background:#f8fafc; border:1px solid #e3e7ec; border-radius:8px; padding:18px 22px; margin:28px 0; }
-.bj-toc p { font-size:14px; font-weight:800; margin:0 0 10px; }
-.bj-toc ol { list-style:none; counter-reset:toc; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
-.bj-toc li { counter-increment:toc; font-size:13px; }
-.bj-toc li::before { content: counter(toc) ". "; color:#2fa14e; font-weight:700; }
-.bj-toc a { color:#2b2f36; text-decoration:none; }
-.bj-toc a:hover { color:#1e4d8b; text-decoration:underline; }
-.bj-article h2 { font-size:21px; font-weight:800; margin:44px 0 18px; padding-bottom:10px; border-bottom:3px solid #2fa14e; }
-.bj-article h3 { font-size:17px; font-weight:800; margin:28px 0 12px; padding-left:10px; border-left:5px solid #1e4d8b; }
-.bj-article p { margin:0 0 16px; }
-.bj-article ul, .bj-article ol.bj-list { margin:0 0 16px; padding-left:1.4em; }
-.bj-article li { margin-bottom:6px; }
-.bj-article strong { color:#e3573f; }
-.bj-steps { display:flex; flex-direction:column; gap:14px; margin:20px 0 28px; }
-.bj-step { display:flex; gap:16px; align-items:flex-start; background:#f8fafc; border:1px solid #e3e7ec; border-radius:8px; padding:16px 18px; }
-.bj-step-num { flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:#2fa14e; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; }
-.bj-step h3 { margin:0 0 6px; padding:0; border:none; font-size:15px; }
-.bj-step p { margin:0; font-size:14px; }
-.bj-table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:14px; }
-.bj-table th, .bj-table td { border:1px solid #e3e7ec; padding:10px 12px; text-align:left; }
-.bj-table th { background:#f2f5f8; font-weight:700; width:32%; }
-.bj-cta { background:linear-gradient(135deg,#eaf6ff,#eaf9ee); border:1px solid #e3e7ec; border-radius:12px; padding:26px; text-align:center; margin:32px 0; }
-.bj-cta p { margin:0 0 16px; font-weight:700; font-size:15px; }
-.bj-cta a { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(180deg,#f5821f,#e2701a); color:#fff; padding:16px 30px; font-size:16px; font-weight:700; border-radius:999px; text-decoration:none; box-shadow:0 4px 0 #c15c0f; }
-.bj-faq { display:flex; flex-direction:column; gap:10px; margin:0 0 20px; }
-.bj-faq details { border:1px solid #e3e7ec; border-radius:8px; padding:14px 16px; }
-.bj-faq summary { font-weight:700; cursor:pointer; list-style:none; display:flex; gap:10px; }
-.bj-faq summary::-webkit-details-marker { display:none; }
-.bj-faq summary::before { content:"Q"; color:#fff; background:#1e4d8b; border-radius:50%; width:20px; height:20px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; font-size:12px; }
-.bj-faq p { margin:12px 0 0; padding-left:30px; font-size:14px; }
-.bj-tags { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; padding:0; list-style:none; }
-.bj-tags a { font-size:12px; background:#f2f5f8; color:#6b7280; padding:4px 12px; border-radius:999px; text-decoration:none; }
-</style>
 
 <span class="bj-cat">会社紹介</span>
 <div class="bj-meta">
@@ -161,5 +144,33 @@
   <li><a href="#">公営バス</a></li>
 </ul>
 </div>
-</body>
-</html>
+
+TOEIBUS;
+
+	$posts = get_posts( array(
+		'post_type'      => 'job',
+		'post_status'    => 'any',
+		'title'          => '都営バス',
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+	) );
+
+	if ( empty( $posts ) ) {
+		update_option( 'bus_toei_bus_fix_done', current_time( 'mysql' ) );
+		wp_die( '「都営バス」というタイトルの求人投稿が見つかりませんでした。タイトルが変わっている場合は教えてください。' );
+	}
+
+	$result = wp_update_post( array(
+		'ID'           => $posts[0],
+		'post_content' => $content,
+	), true );
+
+	update_option( 'bus_toei_bus_fix_done', current_time( 'mysql' ) );
+
+	if ( is_wp_error( $result ) ) {
+		wp_die( '更新エラー: ' . esc_html( $result->get_error_message() ) );
+	}
+
+	echo '<h1>更新しました(投稿ID: ' . intval( $posts[0] ) . ')</h1><p>都営バスの求人ページを実データの内容に差し替えました。</p>';
+	exit;
+} );
