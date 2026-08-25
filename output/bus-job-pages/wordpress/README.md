@@ -11,12 +11,26 @@
 
 `output/pages/{slug}.html` の中身(`<div class="jd-wrap">...</div>`)を、48社ぶん(国際興業バスは既に公開済みのため対象外)「求人」投稿として下書き作成します。
 
+> **注記(2026-08-25)**: `output/pages/*.html` は現在、会社紹介記事スタイル(bj-article)で、ローカルでブラウザ確認しやすいように `<style>` を埋め込んだ**プレビュー用の完全版**です。実際にWordPressの投稿本文へ貼り付ける時は、下記A-2の手順どおり**CSSは別スニペットで全体適用し、本文には `<style>` を含めない**運用にしてください(投稿保存時に `<style>` タグが消えるため)。
+
 1. Code Snippets で「新規追加」→ `bulk-import-job-cpt.codesnippets.php` の中身をまるごと貼り付けて保存・有効化
 2. 管理者ログイン状態で `https://busjob.net/wp-admin/?run_job_import=1` を1回だけ開く
 3. 「48件の下書き求人を作成しました」の一覧が出れば完了。「求人」の投稿一覧に下書きとして並びます
 4. 完了したらこのスニペットは無効化しておいてください
 
 **注意**: 「エリア」タクソノミー(関東/埼玉県/東京都 等のチェック)は自動設定していません。給与・勤務地・写真・応募URLなど【要確認】の項目と合わせて、公開前に手動で設定してください。
+
+### A-2. レイアウトを会社紹介記事スタイルに変更 + CSSが消える問題の修正(2026-08-25)
+
+`bulk-import-job-cpt.codesnippets.php` で作った48件の求人ページを、その後もらった参考HTML(国際興業バスの記事サンプル)と同じ**会社紹介記事スタイル**に差し替えました。
+
+**手順(上から順に)**:
+
+1. `bulk-update-job-layout.codesnippets.php` をCode Snippetsに追加・有効化 → `https://busjob.net/wp-admin/?run_job_layout_update=1` を開く(レイアウトを差し替え)
+2. **スタイルシートが効いていない場合**(投稿本文に直接 `<style>` を埋め込んだため、保存時にWordPressに取り除かれることがあります):
+   - `job-article-style.codesnippets.php` をCode Snippetsに**新しいスニペットとして**追加・有効化(サイト全体の「求人」ページにCSSを適用する。URLを開く操作は不要、追加するだけで反映されます)
+   - 続けて `bulk-fix-job-style.codesnippets.php` をCode Snippetsに追加・有効化 → `https://busjob.net/wp-admin/?run_job_style_fix=1` を開く(投稿本文から不要になった `<style>` タグを取り除く)
+3. 完了したら、使い終わった一括実行系のスニペット(`bulk-import-job-cpt` / `bulk-update-job-layout` / `bulk-fix-job-style`)は無効化しておいてください。`job-article-style`(CSS)だけは**有効のままにしておいてください**(常時CSSを供給する役目のため)
 
 ## B. 会社紹介記事(通常の投稿・ACF)への一括下書き作成
 

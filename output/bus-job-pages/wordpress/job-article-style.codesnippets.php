@@ -1,0 +1,52 @@
+/**
+ * BusJob - 「求人」ページ(bj-articleレイアウト)の共通CSS
+ *
+ * 投稿本文に直接 <style> タグを埋め込むと保存時に消えてしまうため、
+ * サイト全体に対して is_singular('job') の時だけ <style> を出力する方式にしている。
+ *
+ * 使い方:
+ * 1. Code Snippets で「新規追加」→ このコード全体を貼り付けて保存・有効化
+ * 2. これだけで「求人」ページ全部にスタイルが反映されます(URLを開く操作は不要)
+ */
+
+add_action( 'wp_head', function () {
+	if ( is_singular( 'job' ) ) {
+		echo '<style>.bj-article { font-family: "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; color:#2b2f36; line-height:1.9; font-size:15px; max-width:760px; margin:0 auto; }
+.bj-article * { box-sizing:border-box; }
+.bj-cat { display:inline-block; font-size:12px; font-weight:700; color:#fff; background:#1e4d8b; padding:4px 12px; border-radius:4px; margin:0 0 12px; }
+.bj-meta { display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:#6b7280; margin:0 0 20px; }
+.bj-art { width:100%; border-radius:8px; overflow:hidden; display:block; margin:0 0 8px; }
+.bj-toc { background:#f8fafc; border:1px solid #e3e7ec; border-radius:8px; padding:18px 22px; margin:28px 0; }
+.bj-toc p { font-size:14px; font-weight:800; margin:0 0 10px; }
+.bj-toc ol { list-style:none; counter-reset:toc; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.bj-toc li { counter-increment:toc; font-size:13px; }
+.bj-toc li::before { content: counter(toc) ". "; color:#2fa14e; font-weight:700; }
+.bj-toc a { color:#2b2f36; text-decoration:none; }
+.bj-toc a:hover { color:#1e4d8b; text-decoration:underline; }
+.bj-article h2 { font-size:21px; font-weight:800; margin:44px 0 18px; padding-bottom:10px; border-bottom:3px solid #2fa14e; }
+.bj-article h3 { font-size:17px; font-weight:800; margin:28px 0 12px; padding-left:10px; border-left:5px solid #1e4d8b; }
+.bj-article p { margin:0 0 16px; }
+.bj-article ul, .bj-article ol.bj-list { margin:0 0 16px; padding-left:1.4em; }
+.bj-article li { margin-bottom:6px; }
+.bj-article strong { color:#e3573f; }
+.bj-steps { display:flex; flex-direction:column; gap:14px; margin:20px 0 28px; }
+.bj-step { display:flex; gap:16px; align-items:flex-start; background:#f8fafc; border:1px solid #e3e7ec; border-radius:8px; padding:16px 18px; }
+.bj-step-num { flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:#2fa14e; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; }
+.bj-step h3 { margin:0 0 6px; padding:0; border:none; font-size:15px; }
+.bj-step p { margin:0; font-size:14px; }
+.bj-table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:14px; }
+.bj-table th, .bj-table td { border:1px solid #e3e7ec; padding:10px 12px; text-align:left; }
+.bj-table th { background:#f2f5f8; font-weight:700; width:32%; }
+.bj-cta { background:linear-gradient(135deg,#eaf6ff,#eaf9ee); border:1px solid #e3e7ec; border-radius:12px; padding:26px; text-align:center; margin:32px 0; }
+.bj-cta p { margin:0 0 16px; font-weight:700; font-size:15px; }
+.bj-cta a { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(180deg,#f5821f,#e2701a); color:#fff; padding:16px 30px; font-size:16px; font-weight:700; border-radius:999px; text-decoration:none; box-shadow:0 4px 0 #c15c0f; }
+.bj-faq { display:flex; flex-direction:column; gap:10px; margin:0 0 20px; }
+.bj-faq details { border:1px solid #e3e7ec; border-radius:8px; padding:14px 16px; }
+.bj-faq summary { font-weight:700; cursor:pointer; list-style:none; display:flex; gap:10px; }
+.bj-faq summary::-webkit-details-marker { display:none; }
+.bj-faq summary::before { content:"Q"; color:#fff; background:#1e4d8b; border-radius:50%; width:20px; height:20px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; font-size:12px; }
+.bj-faq p { margin:12px 0 0; padding-left:30px; font-size:14px; }
+.bj-tags { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; padding:0; list-style:none; }
+.bj-tags a { font-size:12px; background:#f2f5f8; color:#6b7280; padding:4px 12px; border-radius:999px; text-decoration:none; }</style>';
+	}
+} );

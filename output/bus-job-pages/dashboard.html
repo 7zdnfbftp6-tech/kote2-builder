@@ -282,9 +282,9 @@
   "updated": "2026-08-25",
   "proposals": [
     {
-      "title": "求人ページの新レイアウトを本番に反映する",
-      "desc": "wordpress/bulk-update-job-layout.codesnippets.php をCode Snippetsに追加し、/wp-admin/?run_job_layout_update=1 を開くと48社分を新レイアウトに一括更新できます。",
-      "say": "求人ページの新レイアウト反映がうまくいったか確認したい"
+      "title": "求人ページのCSSが消える問題を直す",
+      "desc": "job-article-style.codesnippets.php(CSS本体)と bulk-fix-job-style.codesnippets.php(本文からstyle除去)を追加・実行すると直ります。",
+      "say": "求人ページのスタイル修正がうまくいったか確認したい"
     },
     {
       "title": "残る【要確認】項目を仕上げる",
@@ -331,6 +331,10 @@
     }
   ],
   "activity": [
+    {
+      "date": "2026-08-25",
+      "text": "求人ページの<style>が保存時に消える問題を発見・修正(CSSをサイト全体適用の別スニペットに分離)"
+    },
     {
       "date": "2026-08-25",
       "text": "「求人」ページのレイアウトをバッジ・テーブル形式から会社紹介記事スタイル(bj-article)へ全面差し替え(48社ぶん)"
