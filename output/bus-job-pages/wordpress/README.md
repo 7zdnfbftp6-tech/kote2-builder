@@ -10,9 +10,17 @@
 ## 1. ショートコードの設置(Code Snippets)
 
 1. WordPress管理画面 →「Code Snippets」→「Add New」
-2. `bus_company_article_shortcode.php` の中身(`<?php` から最後まで)をまるごと貼り付け
+2. **`bus_company_article_shortcode.codesnippets.php` の中身**をまるごと貼り付け(先頭の `<?php` を含まない版。理由は下の「よくあるエラー」参照)
 3. 「Save Changes and Activate」で保存・有効化
 4. これで投稿本文に `[bus_company_article]` と書くだけで記事レイアウトが表示されるようになります(ACFの値が入っていない項目は自動で非表示になる作りです)
+
+### よくあるエラー: 先頭の `<?php` でパースエラーになる
+
+**Code Snippets の入力欄は、すでに内部で `<?php` を補って実行する仕組み**なので、貼り付けるコードの先頭にもう一度 `<?php` があると「二重に開始タグが来た」形になり、構文エラー(`syntax error, unexpected '<'` 等)が出ます。
+
+- **対処**: 貼り付けるコードの**先頭1行目の `<?php` を削除**してから保存する
+- 上記の `*.codesnippets.php` は、あらかじめこの1行を削った版です。同様に `bulk-import-snippet.php` も `bulk-import-snippet.codesnippets.php`(先頭の `<?php` 無し版)を使ってください
+- それでもエラーが出る場合は、Code Snippets の画面に表示される**エラーメッセージの文言をそのまま**教えてください
 
 ## 2. 49社ぶんの投稿を自動で作る(bulk-import-snippet.php)
 
@@ -20,7 +28,7 @@
 
 ### 使い方
 
-1. Code Snippets で「Add New」→ `bulk-import-snippet.php` の中身をまるごと貼り付けて保存・有効化(会社紹介ショートコードのスニペットとは**別のスニペットとして**追加してください)
+1. Code Snippets で「Add New」→ `bulk-import-snippet.codesnippets.php`(先頭に `<?php` の無い版)の中身をまるごと貼り付けて保存・有効化(会社紹介ショートコードのスニペットとは**別のスニペットとして**追加してください)
 2. 管理者アカウントでログインした状態で、ブラウザで次のURLを**1回だけ**開く:
    `https://あなたのサイトURL/wp-admin/?run_bus_import=1`
 3. 「49件の下書き投稿を作成しました」という一覧画面が出れば完了です。投稿一覧に49件、下書き(非公開)状態で並びます
