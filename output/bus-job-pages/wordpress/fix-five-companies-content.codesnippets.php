@@ -1,0 +1,687 @@
+/**
+ * BusJob - 5社(東武バス・西東京バス・京王バス・関東バス・小田急バス)の
+ * 求人ページを実データに差し替え(1回だけ実行するスニペット)
+ *
+ * 各社の事業内容・運行エリアなどを、他社共通の汎用文ではなく
+ * ウェブ検索で調べた実際の情報に基づいて書き直しています。
+ *
+ * 使い方:
+ * 1. Code Snippets で「新規追加」→ このコード全体を貼り付けて保存・有効化
+ * 2. 管理者アカウントでログインした状態で、ブラウザで以下のURLを1回だけ開く:
+ *    https://busjob.net/wp-admin/?run_five_bus_fix=1
+ * 3. 「更新できた件数」の一覧が出れば完了です
+ * 4. 完了したら、このスニペットは無効化しておいてください
+ */
+
+add_action( 'admin_init', function () {
+
+	if ( empty( $_GET['run_five_bus_fix'] ) ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'この操作を実行する権限がありません。管理者アカウントでログインしてから開いてください。' );
+	}
+
+	if ( get_option( 'bus_five_bus_fix_done' ) ) {
+		wp_die( 'この修正は既に実行済みです(bus_five_bus_fix_done オプション)。もう一度やり直したい場合は、管理画面から wp_options の bus_five_bus_fix_done を削除してください。' );
+	}
+
+	$articles = array(
+		[
+			'title'   => '関東バス',
+			'content' => <<<'REALFIX1'
+<div class="bj-article">
+
+<span class="bj-cat">会社紹介</span>
+<div class="bj-meta">
+  <span>公開日: 2026.08.25</span>
+  <span>更新日: 2026.08.25</span>
+</div>
+
+<svg class="bj-art" viewBox="0 0 960 360" role="img" aria-label="関東バスのイメージイラスト">
+  <rect width="960" height="360" fill="#eaf6ee"/>
+  <path d="M0 360 L0 230 L340 150 L620 230 L960 160 L960 360 Z" fill="#bfe3c9"/>
+  <path d="M0 360 L0 290 L360 220 L700 270 L960 235 L960 360 Z" fill="#8fcf9f"/>
+  <rect x="0" y="330" width="960" height="30" fill="#dcd3b7"/>
+  <g transform="translate(300,190)">
+    <rect x="0" y="10" width="360" height="120" rx="16" fill="#ffffff" stroke="#2fa14e" stroke-width="4"/>
+    <path d="M0 90 L360 60 L360 130 L0 130 Z" fill="#2fa14e" opacity="0.85"/>
+    <rect x="18" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="84" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="150" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="216" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="282" y="26" width="60" height="40" rx="4" fill="#cfe7f5" stroke="#2b2f36" stroke-width="2"/>
+    <circle cx="70" cy="140" r="20" fill="#22242b"/>
+    <circle cx="70" cy="140" r="8" fill="#c8ccd4"/>
+    <circle cx="290" cy="140" r="20" fill="#22242b"/>
+    <circle cx="290" cy="140" r="8" fill="#c8ccd4"/>
+  </g>
+</svg>
+<p style="font-size:12px;color:#9aa1ab;text-align:right;margin:0 0 8px;">※写真は準備中です。公式の車両写真に差し替えてご利用ください。</p>
+
+<nav class="bj-toc" aria-label="目次">
+  <p>この記事の目次</p>
+  <ol>
+    <li><a href="#about">関東バスとはどんな会社か</a></li>
+    <li><a href="#reason">関東バスで働く3つの魅力</a></li>
+    <li><a href="#overview">会社概要</a></li>
+    <li><a href="#area">主な営業所エリア</a></li>
+    <li><a href="#work">仕事内容・働き方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</nav>
+
+<p>関東バスは、「たてバス」の愛称で知られる東京都中野区の路線バス会社です。JR総武・中央線と西武新宿・池袋線を結ぶ中央線沿線を中心に、都内城西地域(中野・杉並エリアなど)で路線バスを運行しています。</p>
+
+<h2 id="about">関東バスとはどんな会社か</h2>
+<p>関東バスは、「たてバス」の愛称で知られる東京都中野区の路線バス会社です。JR総武・中央線と西武新宿・池袋線を結ぶ中央線沿線を中心に、都内城西地域(中野・杉並エリアなど)で路線バスを運行しています。</p>
+
+<h2 id="reason">関東バスで働く3つの魅力</h2>
+<div class="bj-steps">
+  <div class="bj-step">
+    <span class="bj-step-num">1</span>
+    <div>
+      <h3>未経験からでも挑戦しやすい研修体制</h3>
+      <p>普通免許(AT限定可、取得後1年以上)があれば応募可能な求人が中心で、大型二種免許は入社後に取得支援を受けられるケースが多くあります(制度の有無は関東バスに要確認)。バスの運転が未経験でも、先輩ドライバーの添乗指導を受けながら着実にステップアップできます。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">2</span>
+    <div>
+      <h3>路線バスに加えて高速バス・空港バスも展開</h3>
+      <p>地域の路線バスに加えて、夜行高速乗合バスや東京ディズニーリゾート直行バス、空港バス(羽田・成田)も運行しているため、経験を積んだ後にさまざまな業務に携われる可能性があります(配属・異動の詳細は関東バスに要確認)。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">3</span>
+    <div>
+      <h3>働きやすい勤務環境づくり</h3>
+      <p>マイカー通勤や単身用の寮・社宅制度など、通勤・生活面のサポート体制を整えている営業所が多く、県外からの転居を伴う転職者も受け入れやすい傾向があります(制度の有無・詳細は関東バスに要確認)。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="overview">会社概要</h2>
+<table class="bj-table">
+  <tr><th>事業内容</th><td>一般路線バスのほか、夜行高速乗合バス(「ドリームスリーパー東京・大阪奈良号」等)、東京ディズニーリゾート・お台場への直行バス、吉祥寺発着の空港バス(羽田・成田)を運行しています。</td></tr>
+  <tr><th>運行エリア</th><td>中央線沿線を中心とした都内城西地域(中野区・杉並区エリアなど)</td></tr>
+  <tr><th>本社所在地</th><td>東京都中野区東中野5丁目23-14</td></tr>
+  <tr><th>電話番号</th><td>03-3371-7111</td></tr>
+  <tr><th>募集職種</th><td>【職種名・要確認(例: 路線バス運転手)】</td></tr>
+</table>
+<p>※上記は公開情報をもとにした概要です。給与・待遇など募集条件の詳細は、各求人ページの募集要項をご確認ください。</p>
+
+<h2 id="area">主な営業所エリア</h2>
+<p>本社・営業所は東京都中野区東中野5-23-14、案内所は杉並区下井草1-5-3にあります。</p>
+
+<h2 id="work">仕事内容・働き方</h2>
+<p>主な仕事は、決められた運行ダイヤに沿って安全にお客様を目的地まで送り届けることです。出庫前点呼・アルコールチェックから始まり、運行、休憩をはさんでの乗務、帰庫後の点検・点呼までが1日の基本的な流れとなります。早番・遅番のシフト制が中心で、営業所によって具体的な勤務時間は異なります。</p>
+<p>接客が好きな方、安全運転を大切にできる方はもちろん、タクシー・トラックドライバーや接客業など異業種からの転職者も多く活躍しています。</p>
+
+<h2 id="faq">よくある質問</h2>
+<div class="bj-faq">
+  <details>
+    <summary>未経験でも応募できますか?</summary>
+    <p>多くの求人で未経験者を歓迎しています。大型二種免許をお持ちでない場合も、入社後の取得支援制度を利用できる求人があります(制度の有無は関東バスに要確認)。</p>
+  </details>
+  <details>
+    <summary>勤務地はどこになりますか?</summary>
+    <p>営業所ごとに担当エリアが分かれていることが多く、居住地に近いエリアを選んで応募できる場合があります。詳しくは関東バスの求人ページでご確認ください。</p>
+  </details>
+  <details>
+    <summary>女性ドライバーも活躍していますか?</summary>
+    <p>近年は女性ドライバーが増えているバス会社が多く、営業所によっては女性用の休憩室・更衣室を整備しています(詳細は関東バスに要確認)。</p>
+  </details>
+</div>
+
+<div class="bj-cta">
+  <p>関東バスの求人に応募してみませんか?</p>
+  <a href="https://busjob.net/#entry">求人詳細を見る ›</a>
+</div>
+
+<ul class="bj-tags">
+  <li><a href="#">関東バス</a></li>
+  <li><a href="#">会社紹介</a></li>
+  <li><a href="#">東京都</a></li>
+</ul>
+</div>
+
+REALFIX1
+		],
+		[
+			'title'   => '京王バス',
+			'content' => <<<'REALFIX2'
+<div class="bj-article">
+
+<span class="bj-cat">会社紹介</span>
+<div class="bj-meta">
+  <span>公開日: 2026.08.25</span>
+  <span>更新日: 2026.08.25</span>
+</div>
+
+<svg class="bj-art" viewBox="0 0 960 360" role="img" aria-label="京王バスのイメージイラスト">
+  <rect width="960" height="360" fill="#eaf6ee"/>
+  <path d="M0 360 L0 230 L340 150 L620 230 L960 160 L960 360 Z" fill="#bfe3c9"/>
+  <path d="M0 360 L0 290 L360 220 L700 270 L960 235 L960 360 Z" fill="#8fcf9f"/>
+  <rect x="0" y="330" width="960" height="30" fill="#dcd3b7"/>
+  <g transform="translate(300,190)">
+    <rect x="0" y="10" width="360" height="120" rx="16" fill="#ffffff" stroke="#2fa14e" stroke-width="4"/>
+    <path d="M0 90 L360 60 L360 130 L0 130 Z" fill="#2fa14e" opacity="0.85"/>
+    <rect x="18" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="84" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="150" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="216" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="282" y="26" width="60" height="40" rx="4" fill="#cfe7f5" stroke="#2b2f36" stroke-width="2"/>
+    <circle cx="70" cy="140" r="20" fill="#22242b"/>
+    <circle cx="70" cy="140" r="8" fill="#c8ccd4"/>
+    <circle cx="290" cy="140" r="20" fill="#22242b"/>
+    <circle cx="290" cy="140" r="8" fill="#c8ccd4"/>
+  </g>
+</svg>
+<p style="font-size:12px;color:#9aa1ab;text-align:right;margin:0 0 8px;">※写真は準備中です。公式の車両写真に差し替えてご利用ください。</p>
+
+<nav class="bj-toc" aria-label="目次">
+  <p>この記事の目次</p>
+  <ol>
+    <li><a href="#about">京王バスとはどんな会社か</a></li>
+    <li><a href="#reason">京王バスで働く3つの魅力</a></li>
+    <li><a href="#overview">会社概要</a></li>
+    <li><a href="#area">主な営業所エリア</a></li>
+    <li><a href="#work">仕事内容・働き方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</nav>
+
+<p>京王バスは、京王グループのバス事業を担う京王電鉄バス株式会社・京王バス株式会社などで構成されるグループです。新宿・東京23区西部・多摩地域(京王線沿線)を中心に、大手町から高尾までを結ぶ路線バスを運行するほか、中央道を中心に約30系統の高速バス、貸切バス(観光バス・路線バスタイプ)事業も展開しています。</p>
+
+<h2 id="about">京王バスとはどんな会社か</h2>
+<p>京王バスは、京王グループのバス事業を担う京王電鉄バス株式会社・京王バス株式会社などで構成されるグループです。新宿・東京23区西部・多摩地域(京王線沿線)を中心に、大手町から高尾までを結ぶ路線バスを運行するほか、中央道を中心に約30系統の高速バス、貸切バス(観光バス・路線バスタイプ)事業も展開しています。</p>
+
+<h2 id="reason">京王バスで働く3つの魅力</h2>
+<div class="bj-steps">
+  <div class="bj-step">
+    <span class="bj-step-num">1</span>
+    <div>
+      <h3>未経験からでも挑戦しやすい研修体制</h3>
+      <p>普通免許(AT限定可、取得後1年以上)があれば応募可能な求人が中心で、大型二種免許は入社後に取得支援を受けられるケースが多くあります(制度の有無は京王バスに要確認)。バスの運転が未経験でも、先輩ドライバーの添乗指導を受けながら着実にステップアップできます。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">2</span>
+    <div>
+      <h3>路線バスから高速バス・貸切バスまで幅広い事業展開</h3>
+      <p>路線バスだけでなく、中央道を中心とした高速バス(約30系統)や、法人輸送・スクールバス・バスツアーを含む貸切バス事業も展開しているため、経験を積んだ後に幅広い業務へのキャリアアップを目指せる環境があります。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">3</span>
+    <div>
+      <h3>働きやすい勤務環境づくり</h3>
+      <p>マイカー通勤や単身用の寮・社宅制度など、通勤・生活面のサポート体制を整えている営業所が多く、県外からの転居を伴う転職者も受け入れやすい傾向があります(制度の有無・詳細は京王バスに要確認)。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="overview">会社概要</h2>
+<table class="bj-table">
+  <tr><th>事業内容</th><td>路線バス、高速バス(中央道方面など約30系統)、貸切バス(法人輸送・スクールバス・バスツアーを含む)。</td></tr>
+  <tr><th>運行エリア</th><td>新宿・東京23区西部・多摩地域(京王線沿線)、大手町〜高尾間の路線バス、中央道方面の高速バス</td></tr>
+  <tr><th>本社所在地</th><td>東京都多摩市関戸1丁目9番地1</td></tr>
+  <tr><th>電話番号</th><td>042-352-3700</td></tr>
+  <tr><th>募集職種</th><td>【職種名・要確認(例: 路線バス運転手)】</td></tr>
+</table>
+<p>※上記は公開情報をもとにした概要です。給与・待遇など募集条件の詳細は、各求人ページの募集要項をご確認ください。</p>
+
+<h2 id="area">主な営業所エリア</h2>
+<p>京王線沿線を中心に複数の営業所があります(具体的な営業所一覧は「京王バス」公式サイトの事業所一覧ページでご確認ください)。</p>
+
+<h2 id="work">仕事内容・働き方</h2>
+<p>主な仕事は、決められた運行ダイヤに沿って安全にお客様を目的地まで送り届けることです。出庫前点呼・アルコールチェックから始まり、運行、休憩をはさんでの乗務、帰庫後の点検・点呼までが1日の基本的な流れとなります。早番・遅番のシフト制が中心で、営業所によって具体的な勤務時間は異なります。</p>
+<p>接客が好きな方、安全運転を大切にできる方はもちろん、タクシー・トラックドライバーや接客業など異業種からの転職者も多く活躍しています。</p>
+
+<h2 id="faq">よくある質問</h2>
+<div class="bj-faq">
+  <details>
+    <summary>未経験でも応募できますか?</summary>
+    <p>多くの求人で未経験者を歓迎しています。大型二種免許をお持ちでない場合も、入社後の取得支援制度を利用できる求人があります(制度の有無は京王バスに要確認)。</p>
+  </details>
+  <details>
+    <summary>勤務地はどこになりますか?</summary>
+    <p>営業所ごとに担当エリアが分かれていることが多く、居住地に近いエリアを選んで応募できる場合があります。詳しくは京王バスの求人ページでご確認ください。</p>
+  </details>
+  <details>
+    <summary>女性ドライバーも活躍していますか?</summary>
+    <p>近年は女性ドライバーが増えているバス会社が多く、営業所によっては女性用の休憩室・更衣室を整備しています(詳細は京王バスに要確認)。</p>
+  </details>
+</div>
+
+<div class="bj-cta">
+  <p>京王バスの求人に応募してみませんか?</p>
+  <a href="https://busjob.net/#entry">求人詳細を見る ›</a>
+</div>
+
+<ul class="bj-tags">
+  <li><a href="#">京王バス</a></li>
+  <li><a href="#">会社紹介</a></li>
+  <li><a href="#">東京都</a></li>
+</ul>
+</div>
+
+REALFIX2
+		],
+		[
+			'title'   => '西東京バス',
+			'content' => <<<'REALFIX3'
+<div class="bj-article">
+
+<span class="bj-cat">会社紹介</span>
+<div class="bj-meta">
+  <span>公開日: 2026.08.25</span>
+  <span>更新日: 2026.08.25</span>
+</div>
+
+<svg class="bj-art" viewBox="0 0 960 360" role="img" aria-label="西東京バスのイメージイラスト">
+  <rect width="960" height="360" fill="#eaf6ee"/>
+  <path d="M0 360 L0 230 L340 150 L620 230 L960 160 L960 360 Z" fill="#bfe3c9"/>
+  <path d="M0 360 L0 290 L360 220 L700 270 L960 235 L960 360 Z" fill="#8fcf9f"/>
+  <rect x="0" y="330" width="960" height="30" fill="#dcd3b7"/>
+  <g transform="translate(300,190)">
+    <rect x="0" y="10" width="360" height="120" rx="16" fill="#ffffff" stroke="#2fa14e" stroke-width="4"/>
+    <path d="M0 90 L360 60 L360 130 L0 130 Z" fill="#2fa14e" opacity="0.85"/>
+    <rect x="18" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="84" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="150" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="216" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="282" y="26" width="60" height="40" rx="4" fill="#cfe7f5" stroke="#2b2f36" stroke-width="2"/>
+    <circle cx="70" cy="140" r="20" fill="#22242b"/>
+    <circle cx="70" cy="140" r="8" fill="#c8ccd4"/>
+    <circle cx="290" cy="140" r="20" fill="#22242b"/>
+    <circle cx="290" cy="140" r="8" fill="#c8ccd4"/>
+  </g>
+</svg>
+<p style="font-size:12px;color:#9aa1ab;text-align:right;margin:0 0 8px;">※写真は準備中です。公式の車両写真に差し替えてご利用ください。</p>
+
+<nav class="bj-toc" aria-label="目次">
+  <p>この記事の目次</p>
+  <ol>
+    <li><a href="#about">西東京バスとはどんな会社か</a></li>
+    <li><a href="#reason">西東京バスで働く3つの魅力</a></li>
+    <li><a href="#overview">会社概要</a></li>
+    <li><a href="#area">主な営業所エリア</a></li>
+    <li><a href="#work">仕事内容・働き方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</nav>
+
+<p>西東京バスは、東京都八王子市に本社を置く京王グループのバス事業者です(京王電鉄の連結子会社)。本社のある八王子市のほか、あきる野市・青梅市を中心に、多摩西部および山梨県北東部の一部で一般路線バスを運行しています。</p>
+
+<h2 id="about">西東京バスとはどんな会社か</h2>
+<p>西東京バスは、東京都八王子市に本社を置く京王グループのバス事業者です(京王電鉄の連結子会社)。本社のある八王子市のほか、あきる野市・青梅市を中心に、多摩西部および山梨県北東部の一部で一般路線バスを運行しています。</p>
+
+<h2 id="reason">西東京バスで働く3つの魅力</h2>
+<div class="bj-steps">
+  <div class="bj-step">
+    <span class="bj-step-num">1</span>
+    <div>
+      <h3>未経験からでも挑戦しやすい研修体制</h3>
+      <p>普通免許(AT限定可、取得後1年以上)があれば応募可能な求人が中心で、大型二種免許は入社後に取得支援を受けられるケースが多くあります(制度の有無は西東京バスに要確認)。バスの運転が未経験でも、先輩ドライバーの添乗指導を受けながら着実にステップアップできます。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">2</span>
+    <div>
+      <h3>路線バスに加えて高速バス・貸切バスも展開</h3>
+      <p>一般路線バスやコミュニティバスに加えて、高速バス・空港連絡バスや貸切バス・特定バス事業も行っているため、経験を積んだ後にさまざまな業務に携われる可能性があります(配属・異動の詳細は西東京バスに要確認)。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">3</span>
+    <div>
+      <h3>働きやすい勤務環境づくり</h3>
+      <p>マイカー通勤や単身用の寮・社宅制度など、通勤・生活面のサポート体制を整えている営業所が多く、県外からの転居を伴う転職者も受け入れやすい傾向があります(制度の有無・詳細は西東京バスに要確認)。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="overview">会社概要</h2>
+<table class="bj-table">
+  <tr><th>事業内容</th><td>一般路線バスのほか、自治体からのコミュニティバス運行受託、高速バス・空港連絡バス、貸切バス・特定バス事業を行っています。</td></tr>
+  <tr><th>運行エリア</th><td>東京都八王子市・あきる野市・青梅市を中心とする多摩西部、山梨県北東部の一部</td></tr>
+  <tr><th>本社所在地</th><td>〒192-0046 東京都八王子市明神町3丁目1番7号</td></tr>
+  <tr><th>電話番号</th><td>042-646-9041</td></tr>
+  <tr><th>募集職種</th><td>【職種名・要確認(例: 路線バス運転手)】</td></tr>
+</table>
+<p>※上記は公開情報をもとにした概要です。給与・待遇など募集条件の詳細は、各求人ページの募集要項をご確認ください。</p>
+
+<h2 id="area">主な営業所エリア</h2>
+<p>営業所・支所は都内西部(八王子市・あきる野市・青梅市エリア)に5拠点あります(具体的な営業所名は西東京バスの公式サイトでご確認ください)。</p>
+
+<h2 id="work">仕事内容・働き方</h2>
+<p>主な仕事は、決められた運行ダイヤに沿って安全にお客様を目的地まで送り届けることです。出庫前点呼・アルコールチェックから始まり、運行、休憩をはさんでの乗務、帰庫後の点検・点呼までが1日の基本的な流れとなります。早番・遅番のシフト制が中心で、営業所によって具体的な勤務時間は異なります。</p>
+<p>接客が好きな方、安全運転を大切にできる方はもちろん、タクシー・トラックドライバーや接客業など異業種からの転職者も多く活躍しています。</p>
+
+<h2 id="faq">よくある質問</h2>
+<div class="bj-faq">
+  <details>
+    <summary>未経験でも応募できますか?</summary>
+    <p>多くの求人で未経験者を歓迎しています。大型二種免許をお持ちでない場合も、入社後の取得支援制度を利用できる求人があります(制度の有無は西東京バスに要確認)。</p>
+  </details>
+  <details>
+    <summary>勤務地はどこになりますか?</summary>
+    <p>営業所ごとに担当エリアが分かれていることが多く、居住地に近いエリアを選んで応募できる場合があります。詳しくは西東京バスの求人ページでご確認ください。</p>
+  </details>
+  <details>
+    <summary>女性ドライバーも活躍していますか?</summary>
+    <p>近年は女性ドライバーが増えているバス会社が多く、営業所によっては女性用の休憩室・更衣室を整備しています(詳細は西東京バスに要確認)。</p>
+  </details>
+</div>
+
+<div class="bj-cta">
+  <p>西東京バスの求人に応募してみませんか?</p>
+  <a href="https://busjob.net/#entry">求人詳細を見る ›</a>
+</div>
+
+<ul class="bj-tags">
+  <li><a href="#">西東京バス</a></li>
+  <li><a href="#">会社紹介</a></li>
+  <li><a href="#">東京都</a></li>
+</ul>
+</div>
+
+REALFIX3
+		],
+		[
+			'title'   => '小田急バス',
+			'content' => <<<'REALFIX4'
+<div class="bj-article">
+
+<span class="bj-cat">会社紹介</span>
+<div class="bj-meta">
+  <span>公開日: 2026.08.25</span>
+  <span>更新日: 2026.08.25</span>
+</div>
+
+<svg class="bj-art" viewBox="0 0 960 360" role="img" aria-label="小田急バスのイメージイラスト">
+  <rect width="960" height="360" fill="#eaf6ee"/>
+  <path d="M0 360 L0 230 L340 150 L620 230 L960 160 L960 360 Z" fill="#bfe3c9"/>
+  <path d="M0 360 L0 290 L360 220 L700 270 L960 235 L960 360 Z" fill="#8fcf9f"/>
+  <rect x="0" y="330" width="960" height="30" fill="#dcd3b7"/>
+  <g transform="translate(300,190)">
+    <rect x="0" y="10" width="360" height="120" rx="16" fill="#ffffff" stroke="#2fa14e" stroke-width="4"/>
+    <path d="M0 90 L360 60 L360 130 L0 130 Z" fill="#2fa14e" opacity="0.85"/>
+    <rect x="18" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="84" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="150" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="216" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="282" y="26" width="60" height="40" rx="4" fill="#cfe7f5" stroke="#2b2f36" stroke-width="2"/>
+    <circle cx="70" cy="140" r="20" fill="#22242b"/>
+    <circle cx="70" cy="140" r="8" fill="#c8ccd4"/>
+    <circle cx="290" cy="140" r="20" fill="#22242b"/>
+    <circle cx="290" cy="140" r="8" fill="#c8ccd4"/>
+  </g>
+</svg>
+<p style="font-size:12px;color:#9aa1ab;text-align:right;margin:0 0 8px;">※写真は準備中です。公式の車両写真に差し替えてご利用ください。</p>
+
+<nav class="bj-toc" aria-label="目次">
+  <p>この記事の目次</p>
+  <ol>
+    <li><a href="#about">小田急バスとはどんな会社か</a></li>
+    <li><a href="#reason">小田急バスで働く3つの魅力</a></li>
+    <li><a href="#overview">会社概要</a></li>
+    <li><a href="#area">主な営業所エリア</a></li>
+    <li><a href="#work">仕事内容・働き方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</nav>
+
+<p>小田急バスは、昭和25年(1950年)設立の小田急グループのバス事業者です。東京都調布市に本社を置き、都内と神奈川県に計6営業所を持ちます。一般路線バスの運行に最も多くの車両を割いているほか、空港連絡バスの運行も行っています(高速バス・貸切バス事業は、グループ会社の小田急ハイウェイバス株式会社が担っています)。</p>
+
+<h2 id="about">小田急バスとはどんな会社か</h2>
+<p>小田急バスは、昭和25年(1950年)設立の小田急グループのバス事業者です。東京都調布市に本社を置き、都内と神奈川県に計6営業所を持ちます。一般路線バスの運行に最も多くの車両を割いているほか、空港連絡バスの運行も行っています(高速バス・貸切バス事業は、グループ会社の小田急ハイウェイバス株式会社が担っています)。</p>
+
+<h2 id="reason">小田急バスで働く3つの魅力</h2>
+<div class="bj-steps">
+  <div class="bj-step">
+    <span class="bj-step-num">1</span>
+    <div>
+      <h3>未経験からでも挑戦しやすい研修体制</h3>
+      <p>普通免許(AT限定可、取得後1年以上)があれば応募可能な求人が中心で、大型二種免許は入社後に取得支援を受けられるケースが多くあります(制度の有無は小田急バスに要確認)。バスの運転が未経験でも、先輩ドライバーの添乗指導を受けながら着実にステップアップできます。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">2</span>
+    <div>
+      <h3>地域密着でキャリアが積みやすい</h3>
+      <p>一般路線バスを中心に、空港連絡バスも運行しているため、経験を積んだ後に職種変更やキャリアアップを目指しやすい環境があります(高速バス・貸切バスはグループ会社の小田急ハイウェイバスが担当のため、キャリアパスの詳細は小田急バスに要確認)。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">3</span>
+    <div>
+      <h3>働きやすい勤務環境づくり</h3>
+      <p>マイカー通勤や単身用の寮・社宅制度など、通勤・生活面のサポート体制を整えている営業所が多く、県外からの転居を伴う転職者も受け入れやすい傾向があります(制度の有無・詳細は小田急バスに要確認)。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="overview">会社概要</h2>
+<table class="bj-table">
+  <tr><th>事業内容</th><td>一般路線バス(グループ内で最も多くの車両を運行)、空港連絡バス。※高速バス・貸切バス事業はグループ会社の小田急ハイウェイバス株式会社が担当。</td></tr>
+  <tr><th>運行エリア</th><td>調布市・三鷹市・武蔵野市・狛江市を中心とする東京北多摩南部、東京23区内(世田谷区・渋谷区)、南多摩地区(稲城市・町田市)、神奈川県内</td></tr>
+  <tr><th>本社所在地</th><td>東京都調布市仙川町2丁目19番地5</td></tr>
+  <tr><th>電話番号</th><td>03-5313-8211</td></tr>
+  <tr><th>募集職種</th><td>【職種名・要確認(例: 路線バス運転手)】</td></tr>
+</table>
+<p>※上記は公開情報をもとにした概要です。給与・待遇など募集条件の詳細は、各求人ページの募集要項をご確認ください。</p>
+
+<h2 id="area">主な営業所エリア</h2>
+<p>都内と神奈川県に計6営業所があります(具体的な営業所名は小田急バスの公式サイトでご確認ください)。</p>
+
+<h2 id="work">仕事内容・働き方</h2>
+<p>主な仕事は、決められた運行ダイヤに沿って安全にお客様を目的地まで送り届けることです。出庫前点呼・アルコールチェックから始まり、運行、休憩をはさんでの乗務、帰庫後の点検・点呼までが1日の基本的な流れとなります。早番・遅番のシフト制が中心で、営業所によって具体的な勤務時間は異なります。</p>
+<p>接客が好きな方、安全運転を大切にできる方はもちろん、タクシー・トラックドライバーや接客業など異業種からの転職者も多く活躍しています。</p>
+
+<h2 id="faq">よくある質問</h2>
+<div class="bj-faq">
+  <details>
+    <summary>未経験でも応募できますか?</summary>
+    <p>多くの求人で未経験者を歓迎しています。大型二種免許をお持ちでない場合も、入社後の取得支援制度を利用できる求人があります(制度の有無は小田急バスに要確認)。</p>
+  </details>
+  <details>
+    <summary>勤務地はどこになりますか?</summary>
+    <p>営業所ごとに担当エリアが分かれていることが多く、居住地に近いエリアを選んで応募できる場合があります。詳しくは小田急バスの求人ページでご確認ください。</p>
+  </details>
+  <details>
+    <summary>女性ドライバーも活躍していますか?</summary>
+    <p>近年は女性ドライバーが増えているバス会社が多く、営業所によっては女性用の休憩室・更衣室を整備しています(詳細は小田急バスに要確認)。</p>
+  </details>
+</div>
+
+<div class="bj-cta">
+  <p>小田急バスの求人に応募してみませんか?</p>
+  <a href="https://busjob.net/#entry">求人詳細を見る ›</a>
+</div>
+
+<ul class="bj-tags">
+  <li><a href="#">小田急バス</a></li>
+  <li><a href="#">会社紹介</a></li>
+  <li><a href="#">東京都</a></li>
+  <li><a href="#">神奈川県</a></li>
+</ul>
+</div>
+
+REALFIX4
+		],
+		[
+			'title'   => '東武バス',
+			'content' => <<<'REALFIX5'
+<div class="bj-article">
+
+<span class="bj-cat">会社紹介</span>
+<div class="bj-meta">
+  <span>公開日: 2026.08.25</span>
+  <span>更新日: 2026.08.25</span>
+</div>
+
+<svg class="bj-art" viewBox="0 0 960 360" role="img" aria-label="東武バスのイメージイラスト">
+  <rect width="960" height="360" fill="#eaf6ee"/>
+  <path d="M0 360 L0 230 L340 150 L620 230 L960 160 L960 360 Z" fill="#bfe3c9"/>
+  <path d="M0 360 L0 290 L360 220 L700 270 L960 235 L960 360 Z" fill="#8fcf9f"/>
+  <rect x="0" y="330" width="960" height="30" fill="#dcd3b7"/>
+  <g transform="translate(300,190)">
+    <rect x="0" y="10" width="360" height="120" rx="16" fill="#ffffff" stroke="#2fa14e" stroke-width="4"/>
+    <path d="M0 90 L360 60 L360 130 L0 130 Z" fill="#2fa14e" opacity="0.85"/>
+    <rect x="18" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="84" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="150" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="216" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="282" y="26" width="60" height="40" rx="4" fill="#cfe7f5" stroke="#2b2f36" stroke-width="2"/>
+    <circle cx="70" cy="140" r="20" fill="#22242b"/>
+    <circle cx="70" cy="140" r="8" fill="#c8ccd4"/>
+    <circle cx="290" cy="140" r="20" fill="#22242b"/>
+    <circle cx="290" cy="140" r="8" fill="#c8ccd4"/>
+  </g>
+</svg>
+<p style="font-size:12px;color:#9aa1ab;text-align:right;margin:0 0 8px;">※写真は準備中です。公式の車両写真に差し替えてご利用ください。</p>
+
+<nav class="bj-toc" aria-label="目次">
+  <p>この記事の目次</p>
+  <ol>
+    <li><a href="#about">東武バスとはどんな会社か</a></li>
+    <li><a href="#reason">東武バスで働く3つの魅力</a></li>
+    <li><a href="#overview">会社概要</a></li>
+    <li><a href="#area">主な営業所エリア</a></li>
+    <li><a href="#work">仕事内容・働き方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</nav>
+
+<p>東武バスグループは、埼玉県を中心に東京都・千葉県・茨城県・群馬県で路線バスを運行するグループです。東武バスセントラル・東武バスウエスト・東武バス日光など複数のグループ会社で構成され、地域ごとに路線バスのほか、成田空港・羽田空港への高速バスや、尾瀬・四万温泉など観光地への高速バス、貸切バス(観光バス)事業も展開しています。</p>
+
+<h2 id="about">東武バスとはどんな会社か</h2>
+<p>東武バスグループは、埼玉県を中心に東京都・千葉県・茨城県・群馬県で路線バスを運行するグループです。東武バスセントラル・東武バスウエスト・東武バス日光など複数のグループ会社で構成され、地域ごとに路線バスのほか、成田空港・羽田空港への高速バスや、尾瀬・四万温泉など観光地への高速バス、貸切バス(観光バス)事業も展開しています。</p>
+
+<h2 id="reason">東武バスで働く3つの魅力</h2>
+<div class="bj-steps">
+  <div class="bj-step">
+    <span class="bj-step-num">1</span>
+    <div>
+      <h3>未経験からでも挑戦しやすい研修体制</h3>
+      <p>普通免許(AT限定可、取得後1年以上)があれば応募可能な求人が中心で、大型二種免許は入社後に取得支援を受けられるケースが多くあります(制度の有無は東武バスに要確認)。バスの運転が未経験でも、先輩ドライバーの添乗指導を受けながら着実にステップアップできます。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">2</span>
+    <div>
+      <h3>路線バスから高速バス・貸切バスまで幅広い事業展開</h3>
+      <p>地域によって、路線バスに加えて空港連絡バスや観光地への高速バス、貸切バス(観光バス)事業も展開しているグループ会社があります。経験を積んだ後に、こうした事業へのキャリアアップを目指せる可能性があります(配属・異動の詳細は東武バスグループに要確認)。</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">3</span>
+    <div>
+      <h3>働きやすい勤務環境づくり</h3>
+      <p>マイカー通勤や単身用の寮・社宅制度など、通勤・生活面のサポート体制を整えている営業所が多く、県外からの転居を伴う転職者も受け入れやすい傾向があります(制度の有無・詳細は東武バスに要確認)。</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="overview">会社概要</h2>
+<table class="bj-table">
+  <tr><th>事業内容</th><td>路線バス、高速バス(空港連絡バス・観光地連絡バス)、貸切バス。東武バスセントラル・東武バスウエスト・東武バス日光など複数のグループ会社で構成。</td></tr>
+  <tr><th>運行エリア</th><td>埼玉県を中心に、東京都・千葉県・茨城県・群馬県</td></tr>
+  <tr><th>本社所在地</th><td>〒131-0045 東京都墨田区押上1丁目1番2号</td></tr>
+  <tr><th>募集職種</th><td>【職種名・要確認(例: 路線バス運転手)】</td></tr>
+</table>
+<p>※上記は公開情報をもとにした概要です。給与・待遇など募集条件の詳細は、各求人ページの募集要項をご確認ください。</p>
+
+<h2 id="area">主な営業所エリア</h2>
+<p>東武バスセントラル・東武バスウエスト・東武バス日光など、グループ会社ごとに営業所があります(具体的な営業所一覧は「東武バスOn-Line」の営業所案内ページでご確認ください)。</p>
+
+<h2 id="work">仕事内容・働き方</h2>
+<p>主な仕事は、決められた運行ダイヤに沿って安全にお客様を目的地まで送り届けることです。出庫前点呼・アルコールチェックから始まり、運行、休憩をはさんでの乗務、帰庫後の点検・点呼までが1日の基本的な流れとなります。早番・遅番のシフト制が中心で、営業所によって具体的な勤務時間は異なります。</p>
+<p>接客が好きな方、安全運転を大切にできる方はもちろん、タクシー・トラックドライバーや接客業など異業種からの転職者も多く活躍しています。</p>
+
+<h2 id="faq">よくある質問</h2>
+<div class="bj-faq">
+  <details>
+    <summary>未経験でも応募できますか?</summary>
+    <p>多くの求人で未経験者を歓迎しています。大型二種免許をお持ちでない場合も、入社後の取得支援制度を利用できる求人があります(制度の有無は東武バスに要確認)。</p>
+  </details>
+  <details>
+    <summary>勤務地はどこになりますか?</summary>
+    <p>営業所ごとに担当エリアが分かれていることが多く、居住地に近いエリアを選んで応募できる場合があります。詳しくは東武バスの求人ページでご確認ください。</p>
+  </details>
+  <details>
+    <summary>女性ドライバーも活躍していますか?</summary>
+    <p>近年は女性ドライバーが増えているバス会社が多く、営業所によっては女性用の休憩室・更衣室を整備しています(詳細は東武バスに要確認)。</p>
+  </details>
+</div>
+
+<div class="bj-cta">
+  <p>東武バスの求人に応募してみませんか?</p>
+  <a href="https://busjob.net/#entry">求人詳細を見る ›</a>
+</div>
+
+<ul class="bj-tags">
+  <li><a href="#">東武バス</a></li>
+  <li><a href="#">会社紹介</a></li>
+  <li><a href="#">埼玉県</a></li>
+  <li><a href="#">東京都</a></li>
+</ul>
+</div>
+
+REALFIX5
+		],
+	);
+
+	$updated = array();
+	$not_found = array();
+
+	foreach ( $articles as $a ) {
+		$posts = get_posts( array(
+			'post_type'      => 'job',
+			'post_status'    => 'any',
+			'title'          => $a['title'],
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+		) );
+
+		if ( empty( $posts ) ) {
+			$not_found[] = $a['title'];
+			continue;
+		}
+
+		$post_id = $posts[0];
+		$result  = wp_update_post( array(
+			'ID'           => $post_id,
+			'post_content' => $a['content'],
+		), true );
+
+		if ( is_wp_error( $result ) ) {
+			$not_found[] = $a['title'] . '(更新エラー)';
+			continue;
+		}
+
+		$updated[] = $post_id . ': ' . $a['title'];
+	}
+
+	update_option( 'bus_five_bus_fix_done', current_time( 'mysql' ) );
+
+	echo '<h1>' . count( $updated ) . ' 件を更新しました</h1><ul>';
+	foreach ( $updated as $line ) {
+		echo '<li>' . esc_html( $line ) . '</li>';
+	}
+	echo '</ul>';
+
+	if ( $not_found ) {
+		echo '<h2>見つからなかったタイトル(' . count( $not_found ) . '件)</h2><ul>';
+		foreach ( $not_found as $line ) {
+			echo '<li>' . esc_html( $line ) . '</li>';
+		}
+		echo '</ul>';
+	}
+
+	exit;
+} );
