@@ -351,20 +351,8 @@
     overflow:hidden;
     box-shadow:var(--shadow);
   }
-  .region-menu .all-btn{
-    display:block;
-    width:100%;
-    border:none;
-    background:var(--orange);
-    color:#fff;
-    font-weight:800;
-    font-size:.92rem;
-    padding:14px 16px;
-    cursor:pointer;
-    text-align:left;
-  }
-  .region-menu .all-btn.active{background:var(--orange-dark);}
   .region-group + .region-group{border-top:1px solid #e7ecf5;}
+  .region-group:first-child{border-top:none;}
   .region-head{
     display:flex;
     align-items:center;
@@ -646,8 +634,6 @@
 
     <div class="job-browser">
       <nav class="region-menu" id="regionMenu">
-        <button type="button" class="all-btn active" data-pref="all">全国の求人から探す</button>
-
         <div class="region-group">
           <button type="button" class="region-head">北海道・東北<span class="chevron">▼</span></button>
           <ul class="pref-list">
@@ -745,8 +731,8 @@
       </nav>
 
       <div class="job-panel">
-        <p class="current-pref" id="currentPref">全国の求人一覧</p>
-        <div class="job-list" id="jobList">
+        <p class="current-pref" id="currentPref">都道府県を選択してください</p>
+        <div class="job-list" id="jobList" style="display:none;">
           <div class="job-card" data-pref="北海道">
             <span class="region-badge">北海道・東北</span>
             <h3>さっぽろ交通バス</h3>
@@ -889,11 +875,12 @@
       btn.classList.add('active');
 
       var pref = btn.dataset.pref;
-      currentPrefLabel.textContent = (pref === 'all') ? '全国の求人一覧' : pref + 'の求人一覧';
+      currentPrefLabel.textContent = pref + 'の求人一覧';
+      jobList.style.display = '';
 
       var visibleCount = 0;
       jobList.querySelectorAll('.job-card').forEach(function(card){
-        var show = (pref === 'all' || card.dataset.pref === pref);
+        var show = (card.dataset.pref === pref);
         card.style.display = show ? '' : 'none';
         if(show) visibleCount++;
       });
