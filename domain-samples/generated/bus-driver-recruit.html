@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>次世代を担う運転手に、自信を持ってオススメできる事｜バス運転手の仕事</title>
+<style>
+  :root{
+    --navy:#1b2e5c;
+    --orange:#f5921e;
+    --orange-dark:#e8720f;
+    --red:#e8455a;
+    --blue:#3a8fd6;
+    --blue-light:#eaf5ff;
+    --cream:#fdeedb;
+    --cream-soft:#fff6ea;
+    --paper:#ffffff;
+    --ink:#2c2c2c;
+    --shadow: 0 6px 18px rgba(27,46,92,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    background:var(--cream-soft);
+    line-height:1.85;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Header / Hero ---------- */
+  .site-header{
+    background:var(--navy);
+    color:#fff;
+    padding:14px 0;
+  }
+  .site-header .wrap{display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-weight:800;font-size:1.15rem;letter-spacing:.02em;}
+  .brand span{color:var(--orange);}
+  .cta-btn{
+    display:inline-block;
+    background:var(--orange);
+    color:#fff;
+    font-weight:700;
+    padding:10px 22px;
+    border-radius:999px;
+    text-decoration:none;
+    font-size:.9rem;
+    box-shadow:0 4px 10px rgba(232,114,15,.35);
+    white-space:nowrap;
+  }
+
+  .hero{
+    background:linear-gradient(135deg,var(--cream) 0%, #fbe0c2 100%);
+    padding:56px 0 44px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero h1{
+    margin:0 0 22px;
+    font-size:2rem;
+    font-weight:800;
+    color:var(--navy);
+    line-height:1.5;
+  }
+  .hero .lead{
+    background:rgba(255,255,255,.6);
+    border-radius:14px;
+    padding:22px 26px;
+    font-size:1.02rem;
+    max-width:640px;
+  }
+  .hero .lead p{margin:0 0 .3em;}
+  .hero .lead p:last-child{margin-bottom:0;}
+
+  /* ---------- Section heading with bus icon ---------- */
+  h2.section-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:1.5rem;
+    font-weight:800;
+    color:var(--orange-dark);
+    border-bottom:3px solid var(--orange);
+    padding-bottom:10px;
+    margin:0 0 26px;
+  }
+  h2.section-title .icon{font-size:1.4rem;}
+
+  section{padding:52px 0;}
+  section:nth-of-type(even){background:var(--paper);}
+
+  /* ---------- Feature callouts with avatar ---------- */
+  .feature{
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    margin:0 0 34px;
+  }
+  .feature.reverse{flex-direction:row-reverse;text-align:right;}
+  .avatar{
+    flex:0 0 auto;
+    width:78px;height:78px;
+    border-radius:50%;
+    background:var(--blue-light);
+    display:flex;align-items:center;justify-content:center;
+    font-size:2.1rem;
+    box-shadow:var(--shadow);
+  }
+  .feature-card{
+    background:var(--paper);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:20px 24px;
+    flex:1;
+  }
+  .feature-card h3{
+    margin:0 0 8px;
+    color:var(--red);
+    font-size:1.15rem;
+    font-weight:800;
+  }
+  .feature-card p{margin:0;font-size:.97rem;}
+
+  /* ---------- Merit list card ---------- */
+  .merit-card{
+    background:var(--paper);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:30px 28px;
+  }
+  .merit-heading{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:linear-gradient(90deg,var(--orange) 0%, #ffb648 100%);
+    color:#fff;
+    font-weight:800;
+    font-size:1.15rem;
+    padding:10px 22px;
+    border-radius:999px;
+    margin:0 0 24px;
+  }
+  ul.merit-list{list-style:none;margin:0;padding:0;}
+  ul.merit-list li{
+    position:relative;
+    padding:12px 0 12px 26px;
+    border-bottom:1px dashed #eadfce;
+    font-size:.98rem;
+  }
+  ul.merit-list li:last-child{border-bottom:none;}
+  ul.merit-list li::before{
+    content:"";
+    position:absolute;
+    left:0;top:20px;
+    width:10px;height:10px;
+    background:var(--orange);
+    border-radius:2px;
+  }
+  ul.merit-list li .sub{
+    display:block;
+    color:#777;
+    font-size:.88rem;
+    margin-top:4px;
+  }
+
+  /* ---------- Trivia (mame-chishiki) boxes ---------- */
+  .trivia{
+    border:3px solid var(--blue);
+    border-radius:16px;
+    padding:28px 30px;
+    background:var(--paper);
+    margin:8px 0 0;
+  }
+  .trivia-tag{
+    display:inline-block;
+    background:#e6f6df;
+    color:#4c8a2b;
+    font-weight:800;
+    font-size:.8rem;
+    padding:4px 12px;
+    border-radius:10px;
+    margin-bottom:10px;
+  }
+  .trivia h3{
+    color:var(--blue);
+    font-size:1.5rem;
+    font-weight:800;
+    margin:0 0 18px;
+  }
+  .trivia .grid{
+    display:flex;
+    gap:26px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .trivia .grid .text{flex:1 1 320px;font-size:.95rem;}
+  .trivia .grid .figure{
+    flex:0 0 auto;
+    text-align:center;
+    background:var(--blue-light);
+    border-radius:14px;
+    padding:18px 22px;
+    font-size:.85rem;
+    font-weight:700;
+    color:var(--navy);
+  }
+  .trivia .grid .figure .globe{font-size:2.6rem;display:block;margin:6px 0;}
+
+  /* ---------- Stat card ---------- */
+  .stat-card{
+    background:var(--paper);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:26px 28px;
+    margin-bottom:22px;
+  }
+  .stat-card ul{margin:0;padding-left:1.2em;}
+  .stat-card li{margin-bottom:14px;font-size:.97rem;}
+  .stat-card li:last-child{margin-bottom:0;}
+
+  /* ---------- Price table ---------- */
+  .price-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    margin-top:18px;
+  }
+  .price-item{
+    background:var(--cream-soft);
+    border-radius:12px;
+    padding:16px 18px;
+  }
+  .price-item h4{
+    margin:0 0 6px;
+    background:#ffdba3;
+    display:inline-block;
+    padding:4px 12px;
+    border-radius:6px;
+    font-size:.95rem;
+  }
+  .price-item .price{
+    font-size:1.3rem;
+    font-weight:800;
+    color:var(--orange-dark);
+  }
+  .price-item p{font-size:.85rem;color:#555;margin:6px 0 0;}
+
+  .parts-note{
+    margin-top:20px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    font-size:.85rem;
+  }
+  .parts-note span{
+    background:var(--blue-light);
+    border-radius:8px;
+    padding:8px 12px;
+  }
+
+  /* ---------- Work schedule timeline ---------- */
+  .timeline-box{
+    background:var(--cream-soft);
+    border:2px solid var(--orange);
+    border-radius:14px;
+    padding:20px 22px;
+    margin:22px 0;
+  }
+  .timeline-box .label{
+    display:inline-block;
+    background:var(--orange);
+    color:#fff;
+    font-weight:800;
+    padding:5px 14px;
+    border-radius:8px;
+    font-size:.85rem;
+    margin-bottom:10px;
+  }
+  .timeline-box .meta{font-size:.85rem;color:#555;margin-bottom:14px;}
+  .bar{
+    display:flex;
+    height:34px;
+    border-radius:8px;
+    overflow:hidden;
+    font-size:.72rem;
+    color:#fff;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .bar div{display:flex;align-items:center;justify-content:center;}
+  .bar .am{background:#ffd23f;color:#7a5300;flex:5.5;}
+  .bar .lunch{background:#ffb98a;flex:1.5;}
+  .bar .rest{background:#ffa15e;flex:3.5;}
+  .bar .pm{background:#e8720f;flex:3.5;}
+  .tick-row{display:flex;justify-content:space-between;font-size:.7rem;color:#888;}
+
+  .env-detail{
+    background:var(--paper);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:24px 28px;
+    margin-top:22px;
+  }
+  .env-detail h4{
+    margin:0 0 8px;
+    font-size:1rem;
+    border-bottom:2px solid var(--cream);
+    padding-bottom:6px;
+  }
+  .env-detail ul{margin:0 0 20px;padding-left:1.3em;font-size:.92rem;}
+  .env-detail ul:last-child{margin-bottom:0;}
+
+  /* ---------- Closing CTA ---------- */
+  .closing{
+    background:linear-gradient(135deg,var(--navy) 0%, #263f7a 100%);
+    color:#fff;
+    text-align:center;
+    padding:56px 0;
+  }
+  .closing h2{font-size:1.5rem;margin:0 0 10px;}
+  .closing p{margin:0 0 26px;opacity:.85;}
+  .closing .cta-btn{font-size:1rem;padding:14px 38px;}
+
+  footer{
+    background:#12203f;
+    color:#8ea0c9;
+    text-align:center;
+    font-size:.78rem;
+    padding:20px 0;
+  }
+
+  @media (max-width:600px){
+    .hero h1{font-size:1.4rem;}
+    .feature, .feature.reverse{flex-direction:column;text-align:left;}
+    .price-grid{grid-template-columns:1fr;}
+    h2.section-title{font-size:1.2rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">バス<span>ジョブ</span>マガジン</div>
+    <a class="cta-btn" href="#">求人をさがす</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>次世代を担う運転手に、<br>自信を持ってオススメできる事</h1>
+    <div class="lead">
+      <p>高齢化がすすむバス業界において、次世代を担う若い世代の人材の確保は喫緊の課題です。若者にとってバス会社に就職するメリットとは何でしょうか?</p>
+      <p>バス運転手は大変なイメージが先行していますが、「運転が好き」「バス運転手に憧れがある」そんな人にとっては、実に魅力的な仕事なんですよ。</p>
+      <p>実際に働くバス運転手に、若者にオススメできるところを挙げてもらいました。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="feature">
+      <div class="avatar">👮‍♂️</div>
+      <div class="feature-card">
+        <h3>地元で有名な大手安定企業に就職できる</h3>
+        <p>地域の人たちが利用する公共交通機関で働くということは、知名度も、信頼もある安定した会社に就職できるということ。また、大手企業であっても他業種より比較的に入りやすいのがいいところ。</p>
+      </div>
+    </div>
+    <div class="feature reverse">
+      <div class="avatar">👮‍♀️</div>
+      <div class="feature-card">
+        <h3>将来幹部候補としての途がある</h3>
+        <p>将来、幹部として運営に関われるチャンスがあります。ライバルが少ないからこそ、最初から幹部を目指してバス会社に就職する人も。</p>
+      </div>
+    </div>
+
+    <div class="merit-card">
+      <div class="merit-heading">👆 あまり知られていないメリット ✨</div>
+      <ul class="merit-list">
+        <li>若い世代の年収は全産業平均よりも高い!</li>
+        <li>有給休暇取得率は全産業よりも高い!(バス:平均13日/年 全産業:9日/年)
+          <span class="sub">休みが少ないイメージだったけど、わりと家族との時間を大切にできる</span>
+        </li>
+        <li>残業が少ない
+          <span class="sub">残業が当たり前だったサラリーマン時代より、心身ともに楽になった。</span>
+        </li>
+        <li>大型二種免許が無くても就職できる。
+          <span class="sub">ハードルが高い大型二種免許。最初から持っている人は実は少ない。支援制度などがあるバス会社も多いので、就職した後に免許を取る人も。</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="trivia">
+      <span class="trivia-tag">ちょこっと豆知識②</span>
+      <h3>バスの一生</h3>
+      <div class="grid">
+        <div class="text">
+          <p>かつて車の寿命は「10年、10万キロ」と言われていましたが、性能の進化によって寿命が延びてきています。では、バスの寿命はどれくらいでしょうか?</p>
+          <p>長距離走行を前提に造られているバスは、とても丈夫で耐久性が高い。そのため用途によりますが寿命は「20年、200万キロ」が一つの目安で、普通車に比べ走行距離は20倍も長く走ることができます。</p>
+          <p>しかし安全性の確保や自動車排出ガス規制によって、古い年式のバスが都市部で使用できなくなったり、人と環境に優しい新しい車両へのモデルチェンジ等、まだまだ使えるバスが廃車になる事も多いのです。</p>
+          <p>そんなバスは、都心から地方で再び活躍したり、フィリピンやミャンマーなどの東南アジア圏に輸出され、第二の人生を歩むことも。日本で廃車になった中古バスが、海外では性能が高く壊れにくい車として重宝され元気に走り回っています。バスが一生かけて人々を運ぶ距離は、地球をぐるりと25周以上。「働くくるま」は、やっぱりかっこいい!</p>
+        </div>
+        <div class="figure">
+          地球25周<span class="globe">🚌🌏</span>バスの寿命:200万キロ以上
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title"><span class="icon">🚌</span>気になるバス運転手の年収</h2>
+    <div class="stat-card">
+      <ul>
+        <li>バス運転手の年収を他職種と年代別に比較してみると、34歳までの若い世代は全職種の年収を上回るがトータルでみると年齢による増減幅が比較的小さい。</li>
+        <li>規制緩和の影響を受け、年収は以前より低下。</li>
+        <li>60歳以上の運転手が全体の16%を占め、定年後の再雇用により正社員の割合が減少。</li>
+      </ul>
+    </div>
+    <p>これらが、バス運転手を取り巻く環境です。ですが今、この現状を打開すべく、各事業者・労働組合・政府が動き出しています。例えば、毎年春に行われる労働条件の改善を求める交渉では昨年143社中、90%以上の事業者が給与のベースアップを約束。そして政府では、高齢化により自動車の運転に不安を感じる高齢者の移動手段としてバスを活用するため、人材確保・育成に向けた検討を行っています。今年、65歳以上の高齢者の割合が、過去最高の27.3%に上昇。言い換えると「4人に1人が高齢者」ということになります。高齢者の割合は今後25年間増え続けるといわれており、公共交通機関であるバスが担う役割は大きく、給与など労働条件の改善に繋がることでしょう。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="trivia">
+      <span class="trivia-tag">ちょこっと豆知識①</span>
+      <h3>How much? バスのお値段</h3>
+      <p>大型バスの部品点数は約25000点もあり、一つ一つ丁寧に組み上げて造られています。作業が複雑で手作業も多いため、自動車と比べると1日あたりの生産台数も少ない。では、バスの部品や1台あたりの価格はどの位するのでしょうか?</p>
+
+      <div class="price-grid">
+        <div class="price-item">
+          <h4>ワンマンステップバス</h4>
+          <div class="price">約1,800万円〜2,100万円</div>
+        </div>
+        <div class="price-item">
+          <h4>ノンステップバス</h4>
+          <div class="price">約2,200万円前後</div>
+          <p>乗降時にステップ(階段)がないバス。ほとんど足を上げずに乗り降りができるので車椅子の方や、子どもにも安心。</p>
+        </div>
+        <div class="price-item">
+          <h4>ハイブリッドタイプ</h4>
+          <div class="price">約2,500万円〜3,000万円</div>
+          <p>ディーゼルエンジンと電気モーターを併用して走るタイプ。温室効果ガスや大気汚染物質の排出を抑えた環境に配慮したバス。</p>
+        </div>
+        <div class="price-item">
+          <h4>高速タイプ</h4>
+          <div class="price">約3,000万円〜4,500万円</div>
+          <p>仕切りカーテンにコンセント、フリーWi-Fiサービスも完備した個室仕様での豪華バスが続々とデビューしています。</p>
+        </div>
+      </div>
+
+      <div class="parts-note">
+        <span>🪟 フロントガラス:かなり高額で約100万円</span>
+        <span>🛞 タイヤ(1本):約5万円/10万キロ位使える</span>
+        <span>🔧 マフラー:約50万円</span>
+        <span>💺 高級感を出すため座席メーカーに特注座席を作ってもらうことも</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="section-title"><span class="icon">🚌</span>はたらく環境について</h2>
+    <p>バス運転手の仕事は「人手不足で、休めない」「長時間労働で、大変そう」そんなイメージをお持ちかもしれません。確かに、変則的な勤務になることもあり、長時間拘束される日もあるでしょう。</p>
+    <p>バス運転手の勤務形態は、一般的に「早番」「遅番」「通し」「中休」等、交替制になってることが多く、なかでも特徴的なのが「中休」という勤務。ラッシュの時間帯をカバーする朝・夕のみの勤務で、朝の勤務終了後から夕方の勤務開始までの時間が休みとなります。休みの時間は自由に過ごすことができ、次の勤務に備え仮眠することもできます。</p>
+    <p>多くの乗客の命を預かるバス運転手の仕事は、体のケアも仕事のうち。バス・タクシー・トラックのドライバー職については、安全な運行の確保という観点から、「拘束時間」「運転時間」「休息時間」などが法律で細かく規制されています。その遵守が義務づけられている以上、無理な勤務を強いられることはありません。</p>
+
+    <div class="timeline-box">
+      <span class="label">中休勤務</span>
+      <div class="meta">例)5:00〜18:00の場合(食事・休憩+中休3時間(仮眠も可))<br>実働時間 ▶ 9時間　拘束時間 ▶ 10時間(※中休を拘束時間に含む場合は拘束時間13時間)</div>
+      <div class="bar">
+        <div class="am">午前の勤務</div>
+        <div class="lunch">食事休憩</div>
+        <div class="rest">中休3時間</div>
+        <div class="pm">午後の勤務</div>
+      </div>
+      <div class="tick-row"><span>5:00</span><span>7:00</span><span>9:00</span><span>11:00</span><span>13:00</span><span>15:00</span><span>18:00</span></div>
+    </div>
+
+    <div class="env-detail">
+      <h4>拘束時間</h4>
+      <ul>
+        <li>1日の拘束時間の上限は原則13時間以内(※延長は最大16時間まで ※15時間を超える回数は週2回までが限度)</li>
+        <li>1週間あたりの拘束時間は原則65時間が限度(※4週間の平均)</li>
+      </ul>
+      <h4>運転時間</h4>
+      <ul>
+        <li>1日の運転時間は9時間以内(※2日の平均)</li>
+        <li>1週間あたり40時間以内(※4週間の平均)</li>
+        <li>連続運転時間は4時間以内(運転開始から4時間以内、または4時間経過直後に30分以上の休憩が必要)</li>
+      </ul>
+      <h4>休息時間</h4>
+      <ul>
+        <li>1日の休息時間は、継続8時間以上必要。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="wrap">
+    <h2>次世代を担うのは、あなたです。</h2>
+    <p>「運転が好き」「人を支える仕事がしたい」その気持ちが、バス運転手という仕事にぴったりです。</p>
+    <a class="cta-btn" href="#">バス運転手の求人を見る</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">バスジョブマガジン(参考記事:bus-gear.com「次世代を担う運転手に、自信を持ってオススメできる事」を再構成)</div>
+</footer>
+
+</body>
+</html>
