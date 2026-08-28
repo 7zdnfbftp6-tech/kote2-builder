@@ -329,6 +329,88 @@
     .price-grid{grid-template-columns:1fr;}
     h2.section-title{font-size:1.2rem;}
   }
+
+  /* ---------- Job listings ---------- */
+  .region-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:0 0 26px;
+  }
+  .region-tab{
+    border:2px solid var(--orange);
+    background:#fff;
+    color:var(--orange-dark);
+    font-weight:700;
+    font-size:.85rem;
+    padding:8px 16px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .region-tab.active{
+    background:var(--orange);
+    color:#fff;
+  }
+  .job-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  .job-card{
+    background:var(--paper);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:20px 22px;
+  }
+  .job-card .region-badge{
+    display:inline-block;
+    background:var(--blue-light);
+    color:var(--blue);
+    font-size:.75rem;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:6px;
+    margin-bottom:8px;
+  }
+  .job-card h3{
+    margin:0 0 6px;
+    font-size:1.05rem;
+    color:var(--navy);
+  }
+  .job-card .place{font-size:.85rem;color:#666;margin-bottom:10px;}
+  .job-card .salary{
+    font-weight:800;
+    color:var(--orange-dark);
+    font-size:1.05rem;
+    margin-bottom:10px;
+  }
+  .job-card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .job-card .tags span{
+    background:var(--cream-soft);
+    border:1px solid #eadfce;
+    font-size:.72rem;
+    padding:3px 9px;
+    border-radius:999px;
+    color:#8a6a3a;
+  }
+  .job-card .detail-btn{
+    display:inline-block;
+    font-size:.82rem;
+    font-weight:700;
+    color:var(--blue);
+    text-decoration:none;
+    border:1px solid var(--blue);
+    padding:6px 16px;
+    border-radius:999px;
+  }
+  .job-note{
+    font-size:.78rem;
+    color:#888;
+    margin-top:18px;
+  }
+  @media (max-width:600px){
+    .job-list{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
@@ -492,6 +574,128 @@
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <h2 class="section-title"><span class="icon">📋</span>求人情報を地方から探す</h2>
+
+    <div class="region-tabs">
+      <button type="button" class="region-tab active" data-region="all">すべて</button>
+      <button type="button" class="region-tab" data-region="hokkaido-tohoku">北海道・東北</button>
+      <button type="button" class="region-tab" data-region="kanto">関東</button>
+      <button type="button" class="region-tab" data-region="chubu">中部</button>
+      <button type="button" class="region-tab" data-region="kinki">近畿</button>
+      <button type="button" class="region-tab" data-region="chugoku-shikoku">中国・四国</button>
+      <button type="button" class="region-tab" data-region="kyushu-okinawa">九州・沖縄</button>
+    </div>
+
+    <div class="job-list">
+      <div class="job-card" data-region="hokkaido-tohoku">
+        <span class="region-badge">北海道・東北</span>
+        <h3>さっぽろ交通バス</h3>
+        <div class="place">北海道札幌市 / 正社員</div>
+        <div class="salary">月給22万円〜28万円</div>
+        <div class="tags"><span>未経験歓迎</span><span>免許取得支援</span><span>中休あり</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+      <div class="job-card" data-region="hokkaido-tohoku">
+        <span class="region-badge">北海道・東北</span>
+        <h3>みちのく観光バス</h3>
+        <div class="place">宮城県仙台市 / 契約社員</div>
+        <div class="salary">月給20万円〜25万円</div>
+        <div class="tags"><span>寮あり</span><span>賞与年2回</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+
+      <div class="job-card" data-region="kanto">
+        <span class="region-badge">関東</span>
+        <h3>関東シティバス</h3>
+        <div class="place">東京都江東区 / 正社員</div>
+        <div class="salary">月給24万円〜32万円</div>
+        <div class="tags"><span>未経験歓迎</span><span>幹部登用あり</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+      <div class="job-card" data-region="kanto">
+        <span class="region-badge">関東</span>
+        <h3>湘南ライナー交通</h3>
+        <div class="place">神奈川県横浜市 / 正社員</div>
+        <div class="salary">月給23万円〜29万円</div>
+        <div class="tags"><span>大型二種免許不要</span><span>残業少なめ</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+
+      <div class="job-card" data-region="chubu">
+        <span class="region-badge">中部</span>
+        <h3>中部トラベルバス</h3>
+        <div class="place">愛知県名古屋市 / 正社員</div>
+        <div class="salary">月給22万円〜27万円</div>
+        <div class="tags"><span>免許取得支援</span><span>賞与年2回</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+      <div class="job-card" data-region="chubu">
+        <span class="region-badge">中部</span>
+        <h3>アルプス高速バス</h3>
+        <div class="place">長野県松本市 / 契約社員</div>
+        <div class="salary">月給21万円〜26万円</div>
+        <div class="tags"><span>未経験歓迎</span><span>中休あり</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+
+      <div class="job-card" data-region="kinki">
+        <span class="region-badge">近畿</span>
+        <h3>なにわ観光バス</h3>
+        <div class="place">大阪府大阪市 / 正社員</div>
+        <div class="salary">月給23万円〜30万円</div>
+        <div class="tags"><span>幹部登用あり</span><span>寮あり</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+      <div class="job-card" data-region="kinki">
+        <span class="region-badge">近畿</span>
+        <h3>京都しろやまバス</h3>
+        <div class="place">京都府京都市 / 正社員</div>
+        <div class="salary">月給22万円〜28万円</div>
+        <div class="tags"><span>未経験歓迎</span><span>残業少なめ</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+
+      <div class="job-card" data-region="chugoku-shikoku">
+        <span class="region-badge">中国・四国</span>
+        <h3>瀬戸内エクスプレス</h3>
+        <div class="place">広島県広島市 / 正社員</div>
+        <div class="salary">月給21万円〜26万円</div>
+        <div class="tags"><span>免許取得支援</span><span>中休あり</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+      <div class="job-card" data-region="chugoku-shikoku">
+        <span class="region-badge">中国・四国</span>
+        <h3>四国みなみ交通</h3>
+        <div class="place">香川県高松市 / 契約社員</div>
+        <div class="salary">月給20万円〜24万円</div>
+        <div class="tags"><span>未経験歓迎</span><span>賞与年2回</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+
+      <div class="job-card" data-region="kyushu-okinawa">
+        <span class="region-badge">九州・沖縄</span>
+        <h3>博多スカイバス</h3>
+        <div class="place">福岡県福岡市 / 正社員</div>
+        <div class="salary">月給22万円〜27万円</div>
+        <div class="tags"><span>幹部登用あり</span><span>寮あり</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+      <div class="job-card" data-region="kyushu-okinawa">
+        <span class="region-badge">九州・沖縄</span>
+        <h3>おきなわ海風バス</h3>
+        <div class="place">沖縄県那覇市 / 正社員</div>
+        <div class="salary">月給21万円〜26万円</div>
+        <div class="tags"><span>未経験歓迎</span><span>免許取得支援</span></div>
+        <a class="detail-btn" href="#">詳細を見る</a>
+      </div>
+    </div>
+
+    <p class="job-note">※掲載企業名・給与等はページ表示イメージのサンプルです。実在の求人情報ではありません。</p>
+  </div>
+</section>
+
 <div class="closing">
   <div class="wrap">
     <h2>次世代を担うのは、あなたです。</h2>
@@ -503,6 +707,19 @@
 <footer>
   <div class="wrap">参考記事:bus-gear.com「次世代を担う運転手に、自信を持ってオススメできる事」を再構成</div>
 </footer>
+
+<script>
+  document.querySelectorAll('.region-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.region-tab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var region = btn.dataset.region;
+      document.querySelectorAll('.job-card').forEach(function(card){
+        card.style.display = (region === 'all' || card.dataset.region === region) ? '' : 'none';
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
