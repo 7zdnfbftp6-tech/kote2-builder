@@ -1,0 +1,165 @@
+<div class="bj-article">
+<style>
+.bj-article { font-family: "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP","Meiryo",sans-serif; color:#2b2f36; line-height:1.9; font-size:15px; max-width:760px; margin:0 auto; }
+.bj-article * { box-sizing:border-box; }
+.bj-cat { display:inline-block; font-size:12px; font-weight:700; color:#fff; background:#1e4d8b; padding:4px 12px; border-radius:4px; margin:0 0 12px; }
+.bj-cat.bj-cat-job { background:#e3573f; }
+.bj-meta { display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:#6b7280; margin:0 0 20px; }
+.bj-art { width:100%; border-radius:8px; overflow:hidden; display:block; margin:0 0 8px; }
+.bj-toc { background:#f8fafc; border:1px solid #e3e7ec; border-radius:8px; padding:18px 22px; margin:28px 0; }
+.bj-toc p { font-size:14px; font-weight:800; margin:0 0 10px; }
+.bj-toc ol { list-style:none; counter-reset:toc; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.bj-toc li { counter-increment:toc; font-size:13px; }
+.bj-toc li::before { content: counter(toc) ". "; color:#2fa14e; font-weight:700; }
+.bj-toc a { color:#2b2f36; text-decoration:none; }
+.bj-toc a:hover { color:#1e4d8b; text-decoration:underline; }
+.bj-article h2 { font-size:21px; font-weight:800; margin:44px 0 18px; padding-bottom:10px; border-bottom:3px solid #2fa14e; }
+.bj-article h3 { font-size:17px; font-weight:800; margin:28px 0 12px; padding-left:10px; border-left:5px solid #1e4d8b; }
+.bj-article p { margin:0 0 16px; }
+.bj-article ul, .bj-article ol.bj-list { margin:0 0 16px; padding-left:1.4em; }
+.bj-article li { margin-bottom:6px; }
+.bj-article strong { color:#e3573f; }
+.bj-fill { color:#1e4d8b; background:#eaf1fb; padding:0 4px; border-radius:3px; }
+.bj-steps { display:flex; flex-direction:column; gap:14px; margin:20px 0 28px; }
+.bj-step { display:flex; gap:16px; align-items:flex-start; background:#f8fafc; border:1px solid #e3e7ec; border-radius:8px; padding:16px 18px; }
+.bj-step-num { flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:#2fa14e; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; }
+.bj-step h3 { margin:0 0 6px; padding:0; border:none; font-size:15px; }
+.bj-step p { margin:0; font-size:14px; }
+.bj-table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:14px; }
+.bj-table th, .bj-table td { border:1px solid #e3e7ec; padding:10px 12px; text-align:left; }
+.bj-table th { background:#f2f5f8; font-weight:700; width:32%; }
+.bj-cta { background:linear-gradient(135deg,#eaf6ff,#eaf9ee); border:1px solid #e3e7ec; border-radius:12px; padding:26px; text-align:center; margin:32px 0; }
+.bj-cta p { margin:0 0 16px; font-weight:700; font-size:15px; }
+.bj-cta a { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(180deg,#f5821f,#e2701a); color:#fff; padding:16px 30px; font-size:16px; font-weight:700; border-radius:999px; text-decoration:none; box-shadow:0 4px 0 #c15c0f; }
+.bj-faq { display:flex; flex-direction:column; gap:10px; margin:0 0 20px; }
+.bj-faq details { border:1px solid #e3e7ec; border-radius:8px; padding:14px 16px; }
+.bj-faq summary { font-weight:700; cursor:pointer; list-style:none; display:flex; gap:10px; }
+.bj-faq summary::-webkit-details-marker { display:none; }
+.bj-faq summary::before { content:"Q"; color:#fff; background:#1e4d8b; border-radius:50%; width:20px; height:20px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; font-size:12px; }
+.bj-faq p { margin:12px 0 0; padding-left:30px; font-size:14px; }
+.bj-tags { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 0; padding:0; list-style:none; }
+.bj-tags a { font-size:12px; background:#f2f5f8; color:#6b7280; padding:4px 12px; border-radius:999px; text-decoration:none; }
+</style>
+
+<span class="bj-cat bj-cat-job">求人情報</span>
+<div class="bj-meta">
+  <span>公開日: <span class="bj-fill">【公開日を入力】</span></span>
+  <span>更新日: <span class="bj-fill">【更新日を入力】</span></span>
+</div>
+
+<svg class="bj-art" viewBox="0 0 960 360" role="img" aria-label="バス運転手求人のイメージイラスト">
+  <rect width="960" height="360" fill="#eaf6ee"/>
+  <path d="M0 360 L0 230 L340 150 L620 230 L960 160 L960 360 Z" fill="#bfe3c9"/>
+  <path d="M0 360 L0 290 L360 220 L700 270 L960 235 L960 360 Z" fill="#8fcf9f"/>
+  <rect x="0" y="330" width="960" height="30" fill="#dcd3b7"/>
+  <g transform="translate(300,190)">
+    <rect x="0" y="10" width="360" height="120" rx="16" fill="#ffffff" stroke="#2fa14e" stroke-width="4"/>
+    <path d="M0 90 L360 60 L360 130 L0 130 Z" fill="#2fa14e" opacity="0.85"/>
+    <rect x="18" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="84" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="150" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="216" y="26" width="56" height="40" rx="4" fill="#dfeaf5" stroke="#2b2f36" stroke-width="2"/>
+    <rect x="282" y="26" width="60" height="40" rx="4" fill="#cfe7f5" stroke="#2b2f36" stroke-width="2"/>
+    <circle cx="70" cy="140" r="20" fill="#22242b"/>
+    <circle cx="70" cy="140" r="8" fill="#c8ccd4"/>
+    <circle cx="290" cy="140" r="20" fill="#22242b"/>
+    <circle cx="290" cy="140" r="8" fill="#c8ccd4"/>
+  </g>
+</svg>
+<p style="font-size:12px;color:#9aa1ab;text-align:right;margin:0 0 8px;">※写真は準備中です。公式の車両写真に差し替えてご利用ください。</p>
+
+<nav class="bj-toc" aria-label="目次">
+  <p>この求人の目次</p>
+  <ol>
+    <li><a href="#about">この求人の概要</a></li>
+    <li><a href="#reason">この仕事の3つの魅力</a></li>
+    <li><a href="#requirement">募集要項</a></li>
+    <li><a href="#area">勤務地・アクセス</a></li>
+    <li><a href="#work">仕事内容・働き方</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</nav>
+
+<p><span class="bj-fill">【会社名】</span>が、<span class="bj-fill">【勤務地(都道府県・エリア)】</span>で一緒に働く路線バス運転手を募集しています。<span class="bj-fill">【この求人ならではのポイントを1〜2文で】</span>この記事では、募集要項や仕事内容、働く魅力について詳しく紹介します。</p>
+
+<h2 id="about">この求人の概要</h2>
+<p><span class="bj-fill">【会社名】</span>は、<span class="bj-fill">【運行エリア・事業内容】</span>を手がける事業者です。今回の募集は<span class="bj-fill">【募集背景(増便・欠員補充・新規路線など)】</span>によるもので、<span class="bj-fill">【募集人数】</span>を予定しています。</p>
+
+<h2 id="reason">この仕事の3つの魅力</h2>
+<div class="bj-steps">
+  <div class="bj-step">
+    <span class="bj-step-num">1</span>
+    <div>
+      <h3>【魅力1の見出し(例:未経験からでも挑戦しやすい研修体制)】</h3>
+      <p>【応募条件や研修体制など、具体的な説明を入力】</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">2</span>
+    <div>
+      <h3>【魅力2の見出し(例:安定した収入・待遇)】</h3>
+      <p>【給与形態や賞与、昇給など、具体的な説明を入力】</p>
+    </div>
+  </div>
+  <div class="bj-step">
+    <span class="bj-step-num">3</span>
+    <div>
+      <h3>【魅力3の見出し(例:働きやすい勤務環境)】</h3>
+      <p>【勤務体系や休日、寮・社宅制度など、具体的な説明を入力】</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="requirement">募集要項</h2>
+<table class="bj-table">
+  <tr><th>職種</th><td><span class="bj-fill">【例:路線バス運転手】</span></td></tr>
+  <tr><th>雇用形態</th><td><span class="bj-fill">【正社員 / 契約社員 / パート・アルバイト】</span></td></tr>
+  <tr><th>給与</th><td><span class="bj-fill">【月給◯◯万円〜◯◯万円 など】</span></td></tr>
+  <tr><th>勤務地</th><td><span class="bj-fill">【都道府県・営業所名など】</span></td></tr>
+  <tr><th>勤務時間</th><td><span class="bj-fill">【早番・遅番・シフト制など】</span></td></tr>
+  <tr><th>休日・休暇</th><td><span class="bj-fill">【週休二日制・シフト制など】</span></td></tr>
+  <tr><th>応募資格</th><td><span class="bj-fill">【普通免許(取得後◯年以上)、大型二種免許の要不要など】</span></td></tr>
+  <tr><th>待遇・福利厚生</th><td><span class="bj-fill">【社会保険、寮・社宅、免許取得支援など】</span></td></tr>
+  <tr><th>選考方法</th><td><span class="bj-fill">【書類選考・面接・適性検査など】</span></td></tr>
+</table>
+<p style="font-size:12px;color:#9aa1ab;">※募集要項は変更になる場合があります。詳細・最新情報は必ず募集元にご確認ください。</p>
+
+<h2 id="area">勤務地・アクセス</h2>
+<ul>
+  <li>【営業所名・最寄り駅など】</li>
+  <li>【営業所名・最寄り駅など】</li>
+</ul>
+<p>【担当エリアやアクセス、マイカー通勤の可否など、勤務地に関する補足を入力】</p>
+
+<h2 id="work">仕事内容・働き方</h2>
+<p>【出庫前点呼・運行・休憩・帰庫後点検など、1日の基本的な流れを入力】</p>
+<p>【どんな人が活躍しているか、異業種からの転職者の例など】</p>
+
+<h2 id="faq">よくある質問</h2>
+<div class="bj-faq">
+  <details>
+    <summary>未経験でも応募できますか?</summary>
+    <p>【回答を入力】</p>
+  </details>
+  <details>
+    <summary>勤務地はどこになりますか?</summary>
+    <p>【回答を入力】</p>
+  </details>
+  <details>
+    <summary>女性ドライバーも活躍していますか?</summary>
+    <p>【回答を入力】</p>
+  </details>
+</div>
+
+<div class="bj-cta">
+  <p>【会社名】の求人に応募してみませんか?</p>
+  <a href="#">求人詳細を見る ›</a>
+</div>
+
+<ul class="bj-tags">
+  <li><a href="#">【会社名】</a></li>
+  <li><a href="#">求人情報</a></li>
+  <li><a href="#">【都道府県】</a></li>
+  <li><a href="#">【雇用形態】</a></li>
+</ul>
+</div>
