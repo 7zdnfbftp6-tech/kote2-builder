@@ -337,24 +337,90 @@
     gap:8px;
     margin:0 0 26px;
   }
-  .region-tab{
-    border:2px solid var(--orange);
-    background:#fff;
-    color:var(--orange-dark);
-    font-weight:700;
-    font-size:.85rem;
-    padding:8px 16px;
-    border-radius:999px;
-    cursor:pointer;
+  .job-browser{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:22px;
+    align-items:start;
   }
-  .region-tab.active{
+
+  /* ---- region accordion menu (busjob.net-style) ---- */
+  .region-menu{
+    background:var(--paper);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .region-menu .all-btn{
+    display:block;
+    width:100%;
+    border:none;
     background:var(--orange);
     color:#fff;
+    font-weight:800;
+    font-size:.92rem;
+    padding:14px 16px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .region-menu .all-btn.active{background:var(--orange-dark);}
+  .region-group + .region-group{border-top:1px solid #e7ecf5;}
+  .region-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    border:none;
+    background:var(--navy);
+    color:#fff;
+    font-weight:700;
+    font-size:.9rem;
+    padding:13px 16px;
+    cursor:pointer;
+  }
+  .region-head .chevron{transition:transform .15s ease;font-size:.75rem;}
+  .region-group.open .region-head .chevron{transform:rotate(180deg);}
+  .pref-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .2s ease;
+    background:#eaf1fb;
+  }
+  .region-group.open .pref-list{max-height:600px;}
+  .pref-list li{border-top:1px solid #dbe5f5;}
+  .pref-list button{
+    display:block;
+    width:100%;
+    border:none;
+    background:none;
+    text-align:left;
+    padding:10px 16px 10px 28px;
+    font-size:.85rem;
+    color:var(--blue);
+    cursor:pointer;
+  }
+  .pref-list button:hover{background:#dde9fa;}
+  .pref-list button.active{
+    background:var(--blue);
+    color:#fff;
+    font-weight:700;
+  }
+  .job-panel .current-pref{
+    font-weight:800;
+    color:var(--navy);
+    font-size:1.05rem;
+    margin:0 0 14px;
   }
   .job-list{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:16px;
+  }
+  @media (max-width:760px){
+    .job-browser{grid-template-columns:1fr;}
   }
   .job-card{
     background:var(--paper);
@@ -578,121 +644,216 @@
   <div class="wrap">
     <h2 class="section-title"><span class="icon">📋</span>求人情報を地方から探す</h2>
 
-    <div class="region-tabs">
-      <button type="button" class="region-tab active" data-region="all">すべて</button>
-      <button type="button" class="region-tab" data-region="hokkaido-tohoku">北海道・東北</button>
-      <button type="button" class="region-tab" data-region="kanto">関東</button>
-      <button type="button" class="region-tab" data-region="chubu">中部</button>
-      <button type="button" class="region-tab" data-region="kinki">近畿</button>
-      <button type="button" class="region-tab" data-region="chugoku-shikoku">中国・四国</button>
-      <button type="button" class="region-tab" data-region="kyushu-okinawa">九州・沖縄</button>
+    <div class="job-browser">
+      <nav class="region-menu" id="regionMenu">
+        <button type="button" class="all-btn active" data-pref="all">全国の求人から探す</button>
+
+        <div class="region-group">
+          <button type="button" class="region-head">北海道・東北<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="北海道">北海道</button></li>
+            <li><button type="button" data-pref="宮城県">宮城県</button></li>
+            <li><button type="button" data-pref="山形県">山形県</button></li>
+            <li><button type="button" data-pref="岩手県">岩手県</button></li>
+            <li><button type="button" data-pref="福島県">福島県</button></li>
+            <li><button type="button" data-pref="秋田県">秋田県</button></li>
+            <li><button type="button" data-pref="青森県">青森県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">北陸・甲信越<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="新潟県">新潟県</button></li>
+            <li><button type="button" data-pref="富山県">富山県</button></li>
+            <li><button type="button" data-pref="石川県">石川県</button></li>
+            <li><button type="button" data-pref="福井県">福井県</button></li>
+            <li><button type="button" data-pref="山梨県">山梨県</button></li>
+            <li><button type="button" data-pref="長野県">長野県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">関東<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="茨城県">茨城県</button></li>
+            <li><button type="button" data-pref="栃木県">栃木県</button></li>
+            <li><button type="button" data-pref="群馬県">群馬県</button></li>
+            <li><button type="button" data-pref="埼玉県">埼玉県</button></li>
+            <li><button type="button" data-pref="千葉県">千葉県</button></li>
+            <li><button type="button" data-pref="東京都">東京都</button></li>
+            <li><button type="button" data-pref="神奈川県">神奈川県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">東海<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="岐阜県">岐阜県</button></li>
+            <li><button type="button" data-pref="静岡県">静岡県</button></li>
+            <li><button type="button" data-pref="愛知県">愛知県</button></li>
+            <li><button type="button" data-pref="三重県">三重県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">近畿<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="滋賀県">滋賀県</button></li>
+            <li><button type="button" data-pref="京都府">京都府</button></li>
+            <li><button type="button" data-pref="大阪府">大阪府</button></li>
+            <li><button type="button" data-pref="兵庫県">兵庫県</button></li>
+            <li><button type="button" data-pref="奈良県">奈良県</button></li>
+            <li><button type="button" data-pref="和歌山県">和歌山県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">中国<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="鳥取県">鳥取県</button></li>
+            <li><button type="button" data-pref="島根県">島根県</button></li>
+            <li><button type="button" data-pref="岡山県">岡山県</button></li>
+            <li><button type="button" data-pref="広島県">広島県</button></li>
+            <li><button type="button" data-pref="山口県">山口県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">四国<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="徳島県">徳島県</button></li>
+            <li><button type="button" data-pref="香川県">香川県</button></li>
+            <li><button type="button" data-pref="愛媛県">愛媛県</button></li>
+            <li><button type="button" data-pref="高知県">高知県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">九州・沖縄<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+            <li><button type="button" data-pref="福岡県">福岡県</button></li>
+            <li><button type="button" data-pref="佐賀県">佐賀県</button></li>
+            <li><button type="button" data-pref="長崎県">長崎県</button></li>
+            <li><button type="button" data-pref="熊本県">熊本県</button></li>
+            <li><button type="button" data-pref="大分県">大分県</button></li>
+            <li><button type="button" data-pref="宮崎県">宮崎県</button></li>
+            <li><button type="button" data-pref="鹿児島県">鹿児島県</button></li>
+            <li><button type="button" data-pref="沖縄県">沖縄県</button></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="job-panel">
+        <p class="current-pref" id="currentPref">全国の求人一覧</p>
+        <div class="job-list" id="jobList">
+          <div class="job-card" data-pref="北海道">
+            <span class="region-badge">北海道・東北</span>
+            <h3>さっぽろ交通バス</h3>
+            <div class="place">北海道札幌市 / 正社員</div>
+            <div class="salary">月給22万円〜28万円</div>
+            <div class="tags"><span>未経験歓迎</span><span>免許取得支援</span><span>中休あり</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+          <div class="job-card" data-pref="宮城県">
+            <span class="region-badge">北海道・東北</span>
+            <h3>みちのく観光バス</h3>
+            <div class="place">宮城県仙台市 / 契約社員</div>
+            <div class="salary">月給20万円〜25万円</div>
+            <div class="tags"><span>寮あり</span><span>賞与年2回</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+
+          <div class="job-card" data-pref="東京都">
+            <span class="region-badge">関東</span>
+            <h3>関東シティバス</h3>
+            <div class="place">東京都江東区 / 正社員</div>
+            <div class="salary">月給24万円〜32万円</div>
+            <div class="tags"><span>未経験歓迎</span><span>幹部登用あり</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+          <div class="job-card" data-pref="神奈川県">
+            <span class="region-badge">関東</span>
+            <h3>湘南ライナー交通</h3>
+            <div class="place">神奈川県横浜市 / 正社員</div>
+            <div class="salary">月給23万円〜29万円</div>
+            <div class="tags"><span>大型二種免許不要</span><span>残業少なめ</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+
+          <div class="job-card" data-pref="愛知県">
+            <span class="region-badge">東海</span>
+            <h3>中部トラベルバス</h3>
+            <div class="place">愛知県名古屋市 / 正社員</div>
+            <div class="salary">月給22万円〜27万円</div>
+            <div class="tags"><span>免許取得支援</span><span>賞与年2回</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+          <div class="job-card" data-pref="長野県">
+            <span class="region-badge">北陸・甲信越</span>
+            <h3>アルプス高速バス</h3>
+            <div class="place">長野県松本市 / 契約社員</div>
+            <div class="salary">月給21万円〜26万円</div>
+            <div class="tags"><span>未経験歓迎</span><span>中休あり</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+
+          <div class="job-card" data-pref="大阪府">
+            <span class="region-badge">近畿</span>
+            <h3>なにわ観光バス</h3>
+            <div class="place">大阪府大阪市 / 正社員</div>
+            <div class="salary">月給23万円〜30万円</div>
+            <div class="tags"><span>幹部登用あり</span><span>寮あり</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+          <div class="job-card" data-pref="京都府">
+            <span class="region-badge">近畿</span>
+            <h3>京都しろやまバス</h3>
+            <div class="place">京都府京都市 / 正社員</div>
+            <div class="salary">月給22万円〜28万円</div>
+            <div class="tags"><span>未経験歓迎</span><span>残業少なめ</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+
+          <div class="job-card" data-pref="広島県">
+            <span class="region-badge">中国</span>
+            <h3>瀬戸内エクスプレス</h3>
+            <div class="place">広島県広島市 / 正社員</div>
+            <div class="salary">月給21万円〜26万円</div>
+            <div class="tags"><span>免許取得支援</span><span>中休あり</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+          <div class="job-card" data-pref="香川県">
+            <span class="region-badge">四国</span>
+            <h3>四国みなみ交通</h3>
+            <div class="place">香川県高松市 / 契約社員</div>
+            <div class="salary">月給20万円〜24万円</div>
+            <div class="tags"><span>未経験歓迎</span><span>賞与年2回</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+
+          <div class="job-card" data-pref="福岡県">
+            <span class="region-badge">九州・沖縄</span>
+            <h3>博多スカイバス</h3>
+            <div class="place">福岡県福岡市 / 正社員</div>
+            <div class="salary">月給22万円〜27万円</div>
+            <div class="tags"><span>幹部登用あり</span><span>寮あり</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+          <div class="job-card" data-pref="沖縄県">
+            <span class="region-badge">九州・沖縄</span>
+            <h3>おきなわ海風バス</h3>
+            <div class="place">沖縄県那覇市 / 正社員</div>
+            <div class="salary">月給21万円〜26万円</div>
+            <div class="tags"><span>未経験歓迎</span><span>免許取得支援</span></div>
+            <a class="detail-btn" href="#">詳細を見る</a>
+          </div>
+        </div>
+        <p class="job-note" id="jobEmpty" style="display:none;">この都道府県の求人は現在ありません。</p>
+      </div>
     </div>
 
-    <div class="job-list">
-      <div class="job-card" data-region="hokkaido-tohoku">
-        <span class="region-badge">北海道・東北</span>
-        <h3>さっぽろ交通バス</h3>
-        <div class="place">北海道札幌市 / 正社員</div>
-        <div class="salary">月給22万円〜28万円</div>
-        <div class="tags"><span>未経験歓迎</span><span>免許取得支援</span><span>中休あり</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-      <div class="job-card" data-region="hokkaido-tohoku">
-        <span class="region-badge">北海道・東北</span>
-        <h3>みちのく観光バス</h3>
-        <div class="place">宮城県仙台市 / 契約社員</div>
-        <div class="salary">月給20万円〜25万円</div>
-        <div class="tags"><span>寮あり</span><span>賞与年2回</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-
-      <div class="job-card" data-region="kanto">
-        <span class="region-badge">関東</span>
-        <h3>関東シティバス</h3>
-        <div class="place">東京都江東区 / 正社員</div>
-        <div class="salary">月給24万円〜32万円</div>
-        <div class="tags"><span>未経験歓迎</span><span>幹部登用あり</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-      <div class="job-card" data-region="kanto">
-        <span class="region-badge">関東</span>
-        <h3>湘南ライナー交通</h3>
-        <div class="place">神奈川県横浜市 / 正社員</div>
-        <div class="salary">月給23万円〜29万円</div>
-        <div class="tags"><span>大型二種免許不要</span><span>残業少なめ</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-
-      <div class="job-card" data-region="chubu">
-        <span class="region-badge">中部</span>
-        <h3>中部トラベルバス</h3>
-        <div class="place">愛知県名古屋市 / 正社員</div>
-        <div class="salary">月給22万円〜27万円</div>
-        <div class="tags"><span>免許取得支援</span><span>賞与年2回</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-      <div class="job-card" data-region="chubu">
-        <span class="region-badge">中部</span>
-        <h3>アルプス高速バス</h3>
-        <div class="place">長野県松本市 / 契約社員</div>
-        <div class="salary">月給21万円〜26万円</div>
-        <div class="tags"><span>未経験歓迎</span><span>中休あり</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-
-      <div class="job-card" data-region="kinki">
-        <span class="region-badge">近畿</span>
-        <h3>なにわ観光バス</h3>
-        <div class="place">大阪府大阪市 / 正社員</div>
-        <div class="salary">月給23万円〜30万円</div>
-        <div class="tags"><span>幹部登用あり</span><span>寮あり</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-      <div class="job-card" data-region="kinki">
-        <span class="region-badge">近畿</span>
-        <h3>京都しろやまバス</h3>
-        <div class="place">京都府京都市 / 正社員</div>
-        <div class="salary">月給22万円〜28万円</div>
-        <div class="tags"><span>未経験歓迎</span><span>残業少なめ</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-
-      <div class="job-card" data-region="chugoku-shikoku">
-        <span class="region-badge">中国・四国</span>
-        <h3>瀬戸内エクスプレス</h3>
-        <div class="place">広島県広島市 / 正社員</div>
-        <div class="salary">月給21万円〜26万円</div>
-        <div class="tags"><span>免許取得支援</span><span>中休あり</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-      <div class="job-card" data-region="chugoku-shikoku">
-        <span class="region-badge">中国・四国</span>
-        <h3>四国みなみ交通</h3>
-        <div class="place">香川県高松市 / 契約社員</div>
-        <div class="salary">月給20万円〜24万円</div>
-        <div class="tags"><span>未経験歓迎</span><span>賞与年2回</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-
-      <div class="job-card" data-region="kyushu-okinawa">
-        <span class="region-badge">九州・沖縄</span>
-        <h3>博多スカイバス</h3>
-        <div class="place">福岡県福岡市 / 正社員</div>
-        <div class="salary">月給22万円〜27万円</div>
-        <div class="tags"><span>幹部登用あり</span><span>寮あり</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-      <div class="job-card" data-region="kyushu-okinawa">
-        <span class="region-badge">九州・沖縄</span>
-        <h3>おきなわ海風バス</h3>
-        <div class="place">沖縄県那覇市 / 正社員</div>
-        <div class="salary">月給21万円〜26万円</div>
-        <div class="tags"><span>未経験歓迎</span><span>免許取得支援</span></div>
-        <a class="detail-btn" href="#">詳細を見る</a>
-      </div>
-    </div>
-
-    <p class="job-note">※掲載企業名・給与等はページ表示イメージのサンプルです。実在の求人情報ではありません。</p>
+    <p class="job-note">※メニュー構成はbusjob.net(https://busjob.net/)の地方別求人メニューを参考にしています。掲載企業名・給与等はページ表示イメージのサンプルで、実在の求人情報ではありません。</p>
   </div>
 </section>
 
@@ -709,14 +870,34 @@
 </footer>
 
 <script>
-  document.querySelectorAll('.region-tab').forEach(function(btn){
+  // 地方グループの開閉(アコーディオン)
+  document.querySelectorAll('.region-head').forEach(function(head){
+    head.addEventListener('click', function(){
+      head.closest('.region-group').classList.toggle('open');
+    });
+  });
+
+  // 都道府県クリックで求人を絞り込み
+  var currentPrefLabel = document.getElementById('currentPref');
+  var jobList = document.getElementById('jobList');
+  var jobEmpty = document.getElementById('jobEmpty');
+  var allPrefButtons = document.querySelectorAll('#regionMenu [data-pref]');
+
+  allPrefButtons.forEach(function(btn){
     btn.addEventListener('click', function(){
-      document.querySelectorAll('.region-tab').forEach(function(b){ b.classList.remove('active'); });
+      allPrefButtons.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
-      var region = btn.dataset.region;
-      document.querySelectorAll('.job-card').forEach(function(card){
-        card.style.display = (region === 'all' || card.dataset.region === region) ? '' : 'none';
+
+      var pref = btn.dataset.pref;
+      currentPrefLabel.textContent = (pref === 'all') ? '全国の求人一覧' : pref + 'の求人一覧';
+
+      var visibleCount = 0;
+      jobList.querySelectorAll('.job-card').forEach(function(card){
+        var show = (pref === 'all' || card.dataset.pref === pref);
+        card.style.display = show ? '' : 'none';
+        if(show) visibleCount++;
       });
+      jobEmpty.style.display = visibleCount === 0 ? '' : 'none';
     });
   });
 </script>
