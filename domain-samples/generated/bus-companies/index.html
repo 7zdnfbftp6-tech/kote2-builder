@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>バス事業者情報を都道府県から探す</title>
+<link rel="stylesheet" href="assets/directory.css">
+</head>
+<body>
+<header class="page-head">
+  <div class="wrap">
+    <h1>バス事業者情報を都道府県から探す</h1>
+    <p>社内調査資料をもとにした事業者一覧です。都道府県を選ぶと、その都道府県の事業者情報が表示されます。</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="browser">
+    <nav class="region-menu" id="regionMenu">
+
+        <div class="region-group">
+          <button type="button" class="region-head">北海道・東北<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="北海道">北海道</button></li>
+<li><button type="button" data-pref="青森県">青森県</button></li>
+<li><button type="button" data-pref="岩手県">岩手県</button></li>
+<li><button type="button" data-pref="宮城県">宮城県</button></li>
+<li><button type="button" data-pref="秋田県">秋田県</button></li>
+<li><button type="button" data-pref="山形県">山形県</button></li>
+<li><button type="button" data-pref="福島県">福島県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">北陸・甲信越<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="新潟県">新潟県</button></li>
+<li><button type="button" data-pref="富山県">富山県</button></li>
+<li><button type="button" data-pref="石川県">石川県</button></li>
+<li><button type="button" data-pref="福井県">福井県</button></li>
+<li><button type="button" data-pref="山梨県">山梨県</button></li>
+<li><button type="button" data-pref="長野県">長野県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">関東<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="茨城県">茨城県</button></li>
+<li><button type="button" data-pref="栃木県">栃木県</button></li>
+<li><button type="button" data-pref="群馬県">群馬県</button></li>
+<li><button type="button" data-pref="埼玉県">埼玉県</button></li>
+<li><button type="button" data-pref="千葉県">千葉県</button></li>
+<li><button type="button" data-pref="東京都">東京都</button></li>
+<li><button type="button" data-pref="神奈川県">神奈川県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">東海<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="岐阜県">岐阜県</button></li>
+<li><button type="button" data-pref="静岡県">静岡県</button></li>
+<li><button type="button" data-pref="愛知県">愛知県</button></li>
+<li><button type="button" data-pref="三重県">三重県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">近畿<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="滋賀県">滋賀県</button></li>
+<li><button type="button" data-pref="京都府">京都府</button></li>
+<li><button type="button" data-pref="大阪府">大阪府</button></li>
+<li><button type="button" data-pref="兵庫県">兵庫県</button></li>
+<li><button type="button" data-pref="奈良県">奈良県</button></li>
+<li><button type="button" data-pref="和歌山県">和歌山県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">中国<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="鳥取県">鳥取県</button></li>
+<li><button type="button" data-pref="島根県">島根県</button></li>
+<li><button type="button" data-pref="岡山県">岡山県</button></li>
+<li><button type="button" data-pref="広島県">広島県</button></li>
+<li><button type="button" data-pref="山口県">山口県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">四国<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="徳島県">徳島県</button></li>
+<li><button type="button" data-pref="香川県">香川県</button></li>
+<li><button type="button" data-pref="愛媛県">愛媛県</button></li>
+<li><button type="button" data-pref="高知県">高知県</button></li>
+          </ul>
+        </div>
+
+        <div class="region-group">
+          <button type="button" class="region-head">九州・沖縄<span class="chevron">▼</span></button>
+          <ul class="pref-list">
+<li><button type="button" data-pref="福岡県">福岡県</button></li>
+<li><button type="button" data-pref="佐賀県">佐賀県</button></li>
+<li><button type="button" data-pref="長崎県">長崎県</button></li>
+<li><button type="button" data-pref="熊本県">熊本県</button></li>
+<li><button type="button" data-pref="大分県">大分県</button></li>
+<li><button type="button" data-pref="宮崎県">宮崎県</button></li>
+<li><button type="button" data-pref="鹿児島県">鹿児島県</button></li>
+<li><button type="button" data-pref="沖縄県">沖縄県</button></li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="panel">
+      <p class="current-pref" id="currentPref">都道府県を選択してください</p>
+      <div class="company-list" id="companyList" style="display:none;">
+<div class="company-card" data-pref="東京都">
+  <span class="pref-badge">東京都</span>
+  <h3>国際興業バス</h3>
+  <div class="addr">東京都中央区八重洲二丁目10番3号</div>
+  <div class="phone">TEL: 要確認</div>
+  <a class="detail-btn" href="articles/kokusai-kogyo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="北海道">
+  <span class="pref-badge">北海道</span>
+  <h3>北海道中央バス</h3>
+  <div class="addr">北海道小樽市色内1丁目8番6号(〒047-0031)</div>
+  <div class="phone">TEL: 0134-24-3301</div>
+  <a class="detail-btn" href="articles/hokkaido-chuo-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="北海道">
+  <span class="pref-badge">北海道</span>
+  <h3>札幌市交通局</h3>
+  <div class="addr">〒060-8611 札幌市中央区北1条西2丁目</div>
+  <div class="phone">TEL: 011-211-2111</div>
+  <a class="detail-btn" href="articles/sapporo-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="青森県">
+  <span class="pref-badge">青森県</span>
+  <h3>弘南バス</h3>
+  <div class="addr">青森県弘前市大字藤野2丁目3-6</div>
+  <div class="phone">TEL: 0172-32-2241</div>
+  <a class="detail-btn" href="articles/kounan-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="岩手県">
+  <span class="pref-badge">岩手県</span>
+  <h3>岩手県交通</h3>
+  <div class="addr">〒020-0034 岩手県盛岡市盛岡駅前通3番55号</div>
+  <div class="phone">TEL: 019-654-2141</div>
+  <a class="detail-btn" href="articles/iwate-ken-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="宮城県">
+  <span class="pref-badge">宮城県</span>
+  <h3>仙台市交通局</h3>
+  <div class="addr">〒980-0801 仙台市青葉区木町通1丁目4-15</div>
+  <div class="phone">TEL: 022-224-5111</div>
+  <a class="detail-btn" href="articles/sendai-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="宮城県">
+  <span class="pref-badge">宮城県</span>
+  <h3>宮城交通</h3>
+  <div class="addr">宮城県仙台市泉区泉ヶ丘3丁目13-20</div>
+  <div class="phone">TEL: 022-771-5310</div>
+  <a class="detail-btn" href="articles/miyagi-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="福島県">
+  <span class="pref-badge">福島県</span>
+  <h3>福島交通</h3>
+  <div class="addr">〒960-8132 福島県福島市東浜町7-8</div>
+  <div class="phone">TEL: 024-533-2131</div>
+  <a class="detail-btn" href="articles/fukushima-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="山形県">
+  <span class="pref-badge">山形県</span>
+  <h3>山形交通</h3>
+  <div class="addr">〒990-0834 山形県山形市清住町1丁目1番20号</div>
+  <div class="phone">TEL: 023-647-5171</div>
+  <a class="detail-btn" href="articles/yamagata-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="新潟県">
+  <span class="pref-badge">新潟県</span>
+  <h3>新潟交通</h3>
+  <div class="addr">〒950-0088 新潟県新潟市中央区万代1丁目6番1号</div>
+  <div class="phone">TEL: 025-246-6353</div>
+  <a class="detail-btn" href="articles/niigata-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="茨城県">
+  <span class="pref-badge">茨城県</span>
+  <h3>関東鉄道</h3>
+  <div class="addr">〒300-0847 茨城県土浦市卸町1-1-1 関鉄つくばビル</div>
+  <div class="phone">TEL: 029-822-3710</div>
+  <a class="detail-btn" href="articles/kanto-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="栃木県">
+  <span class="pref-badge">栃木県</span>
+  <h3>関東自動車</h3>
+  <div class="addr">〒321-0934 栃木県宇都宮市簗瀬4丁目25番5号</div>
+  <div class="phone">TEL: 0570-031811</div>
+  <a class="detail-btn" href="articles/kanto-jidosha.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="東京都">
+  <span class="pref-badge">東京都</span>
+  <h3>東武鉄道</h3>
+  <div class="addr">東京都墨田区押上一丁目1番2号</div>
+  <div class="phone">TEL: 03-5962-0102</div>
+  <a class="detail-btn" href="articles/tobu-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="千葉県">
+  <span class="pref-badge">千葉県</span>
+  <h3>京成電鉄</h3>
+  <div class="addr">〒272-8510 千葉県市川市八幡三丁目3番1号</div>
+  <div class="phone">TEL: 047-712-7000</div>
+  <a class="detail-btn" href="articles/keisei-dentetsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="埼玉県">
+  <span class="pref-badge">埼玉県</span>
+  <h3>西武バス</h3>
+  <div class="addr">〒359-1180 埼玉県所沢市久米546-1</div>
+  <div class="phone">TEL: 04-2995-8111</div>
+  <a class="detail-btn" href="articles/seibu-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="東京都">
+  <span class="pref-badge">東京都</span>
+  <h3>東京都交通局</h3>
+  <div class="addr">〒163-8001 東京都新宿区西新宿2-8-1</div>
+  <div class="phone">TEL: 03-3816-5700</div>
+  <a class="detail-btn" href="articles/tokyo-to-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="東京都">
+  <span class="pref-badge">東京都</span>
+  <h3>京王帝都電鉄(現・京王電鉄)</h3>
+  <div class="addr">〒206-8502 東京都多摩市関戸一丁目9番地1</div>
+  <div class="phone">TEL: 042-337-3112</div>
+  <a class="detail-btn" href="articles/keio-teito-dentetsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="神奈川県">
+  <span class="pref-badge">神奈川県</span>
+  <h3>神奈川中央交通</h3>
+  <div class="addr">〒254-0811 神奈川県平塚市八重咲町6-18</div>
+  <div class="phone">TEL: 要確認</div>
+  <a class="detail-btn" href="articles/kanagawa-chuo-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="神奈川県">
+  <span class="pref-badge">神奈川県</span>
+  <h3>横浜市交通局</h3>
+  <div class="addr">〒231-0005 横浜市中区本町6丁目50番地の10 横浜市役所</div>
+  <div class="phone">TEL: 045-671-3147</div>
+  <a class="detail-btn" href="articles/yokohama-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="山梨県">
+  <span class="pref-badge">山梨県</span>
+  <h3>山梨交通</h3>
+  <div class="addr">〒400-0035 山梨県甲府市飯田3-2-34</div>
+  <div class="phone">TEL: 055-223-0811</div>
+  <a class="detail-btn" href="articles/yamanashi-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="石川県">
+  <span class="pref-badge">石川県</span>
+  <h3>北陸鉄道</h3>
+  <div class="addr">石川県金沢市広岡3丁目1番1号 金沢パークビル1F</div>
+  <div class="phone">TEL: 076-204-9600</div>
+  <a class="detail-btn" href="articles/hokuriku-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="岐阜県">
+  <span class="pref-badge">岐阜県</span>
+  <h3>岐阜乗合自動車(岐阜バス)</h3>
+  <div class="addr">〒500-8722 岐阜県岐阜市九重町4丁目20番地</div>
+  <div class="phone">TEL: 058-240-8800</div>
+  <a class="detail-btn" href="articles/gifu-noriai-jidosha.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="静岡県">
+  <span class="pref-badge">静岡県</span>
+  <h3>静岡鉄道</h3>
+  <div class="addr">〒420-8510 静岡県静岡市葵区鷹匠一丁目1番1号(静鉄鷹匠ビル)</div>
+  <div class="phone">TEL: 054-254-5111</div>
+  <a class="detail-btn" href="articles/shizuoka-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="愛知県">
+  <span class="pref-badge">愛知県</span>
+  <h3>名古屋鉄道</h3>
+  <div class="addr">〒450-8501 愛知県名古屋市中村区名駅四丁目8番26号 エニシオ名駅</div>
+  <div class="phone">TEL: 052-582-5151</div>
+  <a class="detail-btn" href="articles/nagoya-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="愛知県">
+  <span class="pref-badge">愛知県</span>
+  <h3>名古屋市交通局</h3>
+  <div class="addr">愛知県名古屋市中区三の丸三丁目1番1号</div>
+  <div class="phone">TEL: 052-972-3807</div>
+  <a class="detail-btn" href="articles/nagoya-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="三重県">
+  <span class="pref-badge">三重県</span>
+  <h3>三重交通</h3>
+  <div class="addr">三重県津市中央1番1号</div>
+  <div class="phone">TEL: 059-229-5555</div>
+  <a class="detail-btn" href="articles/mie-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="滋賀県">
+  <span class="pref-badge">滋賀県</span>
+  <h3>近江鉄道</h3>
+  <div class="addr">滋賀県彦根市駅東町15番1</div>
+  <div class="phone">TEL: 0749-22-3301</div>
+  <a class="detail-btn" href="articles/omi-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="京都府">
+  <span class="pref-badge">京都府</span>
+  <h3>京都市交通局</h3>
+  <div class="addr">〒616-8104 京都市右京区太秦下刑部町12番地</div>
+  <div class="phone">TEL: 075-863-5200</div>
+  <a class="detail-btn" href="articles/kyoto-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="大阪府">
+  <span class="pref-badge">大阪府</span>
+  <h3>阪急バス</h3>
+  <div class="addr">〒560-8551 大阪府豊中市岡上の町1丁目1番16号(登記上本店は池田市井口堂1-9-21)</div>
+  <div class="phone">TEL: 06-6866-3111</div>
+  <a class="detail-btn" href="articles/hankyu-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="大阪府">
+  <span class="pref-badge">大阪府</span>
+  <h3>大阪市交通局(現・大阪市高速電気軌道/Osaka Metro)</h3>
+  <div class="addr">〒550-0025 大阪府大阪市西区九条南1丁目12番62号</div>
+  <div class="phone">TEL: 06-6582-1400</div>
+  <a class="detail-btn" href="articles/osaka-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="大阪府">
+  <span class="pref-badge">大阪府</span>
+  <h3>南海電気鉄道</h3>
+  <div class="addr">大阪府大阪市中央区難波五丁目1番60号</div>
+  <div class="phone">TEL: 要確認</div>
+  <a class="detail-btn" href="articles/nankai-dentetsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="兵庫県">
+  <span class="pref-badge">兵庫県</span>
+  <h3>神戸市交通局</h3>
+  <div class="addr">〒652-0855 兵庫県神戸市兵庫区御崎町一丁目2番1号</div>
+  <div class="phone">TEL: 078-333-3330</div>
+  <a class="detail-btn" href="articles/kobe-shi-kotsukyoku.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="兵庫県">
+  <span class="pref-badge">兵庫県</span>
+  <h3>神姫バス</h3>
+  <div class="addr">兵庫県姫路市西駅前町1番地</div>
+  <div class="phone">TEL: 079-223-1254</div>
+  <a class="detail-btn" href="articles/shinki-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="奈良県">
+  <span class="pref-badge">奈良県</span>
+  <h3>奈良交通</h3>
+  <div class="addr">奈良県奈良市大宮町1丁目1番25号</div>
+  <div class="phone">TEL: 0742-20-3116</div>
+  <a class="detail-btn" href="articles/nara-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="鳥取県">
+  <span class="pref-badge">鳥取県</span>
+  <h3>日ノ丸自動車</h3>
+  <div class="addr">〒680-0921 鳥取県鳥取市古海620番地</div>
+  <div class="phone">TEL: 0857-22-5154</div>
+  <a class="detail-btn" href="articles/hinomaru-jidosha.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="島根県">
+  <span class="pref-badge">島根県</span>
+  <h3>一畑電車(旧・一畑電気鉄道)</h3>
+  <div class="addr">島根県出雲市平田町2226番地(雲州平田駅構内)</div>
+  <div class="phone">TEL: 0853-62-3383</div>
+  <a class="detail-btn" href="articles/ichibata-dentetsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="岡山県">
+  <span class="pref-badge">岡山県</span>
+  <h3>両備ホールディングス(両備バスカンパニー)</h3>
+  <div class="addr">〒700-8518 岡山県岡山市北区下石井二丁目10番12号</div>
+  <div class="phone">TEL: 0570-08-5050</div>
+  <a class="detail-btn" href="articles/ryobi-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="広島県">
+  <span class="pref-badge">広島県</span>
+  <h3>広島電鉄</h3>
+  <div class="addr">〒730-8610 広島県広島市中区東千田町二丁目9番29号</div>
+  <div class="phone">TEL: 082-242-3502</div>
+  <a class="detail-btn" href="articles/hiroshima-dentetsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="山口県">
+  <span class="pref-badge">山口県</span>
+  <h3>サンデン交通</h3>
+  <div class="addr">〒750-8510 山口県下関市羽山町3番3号</div>
+  <div class="phone">TEL: 083-231-1000</div>
+  <a class="detail-btn" href="articles/sanden-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="愛媛県">
+  <span class="pref-badge">愛媛県</span>
+  <h3>伊予鉄道</h3>
+  <div class="addr">愛媛県松山市湊町4丁目4番地1</div>
+  <div class="phone">TEL: 089-948-3222</div>
+  <a class="detail-btn" href="articles/iyo-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="福岡県">
+  <span class="pref-badge">福岡県</span>
+  <h3>西日本鉄道(西鉄)</h3>
+  <div class="addr">〒810-0001 福岡県福岡市中央区天神一丁目11番1号 ONE FUKUOKA BLDG.</div>
+  <div class="phone">TEL: 要確認</div>
+  <a class="detail-btn" href="articles/nishinippon-tetsudo.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="長崎県">
+  <span class="pref-badge">長崎県</span>
+  <h3>長崎自動車(長崎バス)</h3>
+  <div class="addr">〒850-8501 長崎県長崎市新地町3番17号</div>
+  <div class="phone">TEL: 095-833-4600</div>
+  <a class="detail-btn" href="articles/nagasaki-jidosha.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="熊本県">
+  <span class="pref-badge">熊本県</span>
+  <h3>九州産交バス(九州産業交通)</h3>
+  <div class="addr">〒860-0068 熊本県熊本市西区上代4丁目13番34号</div>
+  <div class="phone">TEL: 要確認</div>
+  <a class="detail-btn" href="articles/kyushu-sangyo-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="大分県">
+  <span class="pref-badge">大分県</span>
+  <h3>大分バス</h3>
+  <div class="addr">〒870-0026 大分県大分市金池町2丁目12番1号</div>
+  <div class="phone">TEL: 097-534-6161</div>
+  <a class="detail-btn" href="articles/oita-bus.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="宮崎県">
+  <span class="pref-badge">宮崎県</span>
+  <h3>宮崎交通</h3>
+  <div class="addr">〒880-0865 宮崎県宮崎市松山一丁目1番1号(宮崎観光ホテル西館)</div>
+  <div class="phone">TEL: 0985-32-5783</div>
+  <a class="detail-btn" href="articles/miyazaki-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="鹿児島県">
+  <span class="pref-badge">鹿児島県</span>
+  <h3>鹿児島交通</h3>
+  <div class="addr">鹿児島県鹿児島市鴨池新町12-12(要確認)</div>
+  <div class="phone">TEL: 要確認</div>
+  <a class="detail-btn" href="articles/kagoshima-kotsu.html">会社情報を見る</a>
+</div>
+<div class="company-card" data-pref="沖縄県">
+  <span class="pref-badge">沖縄県</span>
+  <h3>琉球バス交通</h3>
+  <div class="addr">〒901-0223 沖縄県豊見城市字翁長811番地</div>
+  <div class="phone">TEL: 098-851-4384</div>
+  <a class="detail-btn" href="articles/ryukyu-bus.html">会社情報を見る</a>
+</div>
+      </div>
+      <p class="empty-note" id="emptyNote" style="display:none;">この都道府県に登録されている事業者情報は現在ありません。</p>
+    </div>
+  </div>
+
+    <div class="excluded-note">
+      <p><strong>掲載を見送った事業者について</strong></p>
+      <ul>
+<li><strong>川中島バス</strong>(長野県) — 2011年にアルピコ交通(旧・松本電気鉄道)へ吸収合併され法人として現存しない。求人ページの掲載主体として不適切な可能性あり</li>
+<li><strong>高知県交通</strong>(高知県) — 2014年にとさでん交通へ統合され独立法人として現存しない。求人ページの掲載主体として不適切な可能性あり</li>
+      </ul>
+    </div>
+</main>
+
+<script src="assets/directory.js"></script>
+</body>
+</html>
